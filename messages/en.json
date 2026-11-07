@@ -1,0 +1,39 @@
+{
+  "Metadata": {
+    "title": "Boomly: luggage storage at local shops near you",
+    "description": "Leave your bags with a trusted local shop near the station or the sights. Book online, €5 per bag per day."
+  },
+  "Header": {
+    "partner": "Become a partner",
+    "language": "Français"
+  },
+  "Home": {
+    "badge": "Coming soon to your city",
+    "title": "Drop your bags. Enjoy the city.",
+    "subtitle": "Leave your bags with a local shop near the station or the sights. Book in 1 minute and make the most of your day.",
+    "searchPlaceholder": "Address, station or landmark",
+    "searchButton": "Find storage",
+    "searchSoon": "Search is coming soon.",
+    "price": "{price} per bag per day",
+    "priceNote": "Any bag size. Free cancellation until your drop-off time.",
+    "howTitle": "How it works",
+    "step1Title": "Book online",
+    "step1Text": "Pick a drop-off point on the map, your times and number of bags. Pay by card, Apple Pay or Google Pay, no account needed.",
+    "step2Title": "Drop off your bags",
+    "step2Text": "Show your QR code to the shopkeeper. They scan it and tag each bag.",
+    "step3Title": "Pick them up",
+    "step3Text": "Come back at the planned time; the shopkeeper scans your code again and hands your bags back.",
+    "partnerTitle": "Do you run a shop?",
+    "partnerText": "Restaurant, bar, newsagent, boutique: earn extra income with no investment and welcome new passing customers.",
+    "partnerCta": "Become a partner",
+    "partnerSoon": "Sign-ups opening soon"
+  },
+  "Footer": {
+    "tagline": "Boomly stores nothing: your bags are looked after by verified partner shops.",
+    "rights": "All rights reserved."
+  },
+  "NotFound": {
+    "title": "Page not found",
+    "back": "Back to home"
+  }
+}

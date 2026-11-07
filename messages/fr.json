@@ -1,0 +1,39 @@
+{
+  "Metadata": {
+    "title": "Boomly : consigne à bagages chez les commerçants près de vous",
+    "description": "Déposez vos bagages chez un commerçant de confiance près de la gare ou des lieux touristiques. Réservation en ligne, 5 € par bagage et par jour."
+  },
+  "Header": {
+    "partner": "Devenir partenaire",
+    "language": "English"
+  },
+  "Home": {
+    "badge": "Bientôt dans votre ville",
+    "title": "Libérez-vous de vos bagages.",
+    "subtitle": "Déposez vos sacs chez un commerçant de quartier, près de la gare ou des lieux à visiter. Réservez en 1 minute, profitez de votre journée.",
+    "searchPlaceholder": "Adresse, gare ou lieu touristique",
+    "searchButton": "Trouver une consigne",
+    "searchSoon": "La recherche arrive bientôt.",
+    "price": "{price} par bagage et par jour",
+    "priceNote": "Toutes tailles de bagages. Annulation gratuite jusqu'à l'heure de dépôt.",
+    "howTitle": "Comment ça marche",
+    "step1Title": "Réservez en ligne",
+    "step1Text": "Choisissez un point de dépôt sur la carte, vos horaires et le nombre de bagages. Payez par carte, Apple Pay ou Google Pay, sans créer de compte.",
+    "step2Title": "Déposez vos bagages",
+    "step2Text": "Présentez votre code QR au commerçant. Il le scanne et étiquette chaque bagage.",
+    "step3Title": "Récupérez-les",
+    "step3Text": "Revenez à l'heure prévue, le commerçant scanne à nouveau votre code et vous rend vos affaires.",
+    "partnerTitle": "Vous tenez un commerce ?",
+    "partnerText": "Restaurant, bar, tabac, boutique : gagnez un revenu en plus sans investissement, et accueillez de nouveaux clients de passage.",
+    "partnerCta": "Devenir partenaire",
+    "partnerSoon": "Inscriptions bientôt ouvertes"
+  },
+  "Footer": {
+    "tagline": "Boomly ne stocke rien : vos bagages sont gardés par des commerçants partenaires vérifiés.",
+    "rights": "Tous droits réservés."
+  },
+  "NotFound": {
+    "title": "Page introuvable",
+    "back": "Retour à l'accueil"
+  }
+}

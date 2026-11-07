@@ -1,36 +1,32 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Boomly
 
-## Getting Started
+Consigne à bagages chez des commerçants partenaires. Next.js (App Router) + TypeScript + Tailwind,
+Supabase, Stripe Connect, next-intl (FR/EN), Resend, Vercel.
 
-First, run the development server:
+## Lancer le projet sur son ordinateur
+
+1. Installer [Node.js](https://nodejs.org) (version 22 ou plus).
+2. Copier `.env.example` en `.env.local` et remplir les valeurs.
+3. Dans un terminal, depuis ce dossier :
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Ouvrir http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Organisation
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `messages/fr.json`, `messages/en.json` : tous les textes du site.
+- `src/app/[locale]/` : les pages (`/fr/...`, `/en/...`).
+- `src/app/api/` : le code serveur (paiement, webhooks…). `/api/health` vérifie la connexion à Supabase.
+- `src/lib/supabase/` : connexion à la base de données.
+- `supabase/migrations/` : structure de la base et règles de sécurité (à partir de l'étape 2).
 
-## Learn More
+## Règles
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Montants calculés uniquement côté serveur ; paiements confirmés par webhook Stripe.
+- Accès aux données protégé par la Row Level Security de Supabase.
+- Aucune clé secrète dans le code : uniquement des variables d'environnement.
+- Stripe en mode test jusqu'à nouvel ordre.
