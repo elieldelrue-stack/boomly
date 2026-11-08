@@ -10,6 +10,8 @@ import { Alert, Card, PageShell } from "@/components/ui/form";
 import { PayButton } from "@/components/travel/PayButton";
 import { PaymentPoller } from "@/components/travel/PaymentPoller";
 import { qrSvg } from "@/lib/qr";
+import { getPublicLocation } from "@/lib/public-locations";
+import { ManageBooking, IncidentForm, ReviewForm } from "@/components/travel/TravelerActions";
 
 export const metadata = { robots: { index: false } };
 
@@ -58,6 +60,19 @@ async function Reservation({
   const confirmed = ["paid", "dropped_off"].includes(booking.status);
   const waitingForStripe = booking.status === "pending_payment" && paid === "1";
   const qr = confirmed ? await qrSvg(booking.reference) : null;
+  const access = { reference: booking.reference, token };
+  const nowMs = new Date().getTime();
+  const beforeDropoff = booking.status === "paid" && new Date(booking.dropoff_at).getTime() > nowMs;
+  const publicLoc = beforeDropoff ? await getPublicLocation(loc.id) : null;
+  const local = (iso: string) => {
+    const parts = Object.fromEntries(
+      new Intl.DateTimeFormat("en-CA", { timeZone: TZ, year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23" })
+        .formatToParts(new Date(iso))
+        .map((x) => [x.type, x.value]),
+    );
+    return { date: `${parts.year}-${parts.month}-${parts.day}`, time: `${parts.hour}:${parts.minute}` };
+  };
+  const canIncident = ["paid", "dropped_off", "picked_up"].includes(booking.status);
 
   return (
     <div className="flex flex-col gap-6">
@@ -134,6 +149,42 @@ async function Reservation({
 
       {booking.status === "pending_payment" && !expired && !waitingForStripe && (
         <PayButton reference={booking.reference} token={token} total={formatEuros(booking.total_cents, locale)} />
+      )}
+
+      {booking.refunded_cents > 0 && (
+        <Alert kind="info">{t("refundedAmount", { amount: formatEuros(booking.refunded_cents, locale) })}</Alert>
+      )}
+
+      {beforeDropoff && publicLoc && (
+        <ManageBooking
+          access={access}
+          hours={publicLoc.hours}
+          dropoffDate={local(booking.dropoff_at).date}
+          dropoffTime={local(booking.dropoff_at).time}
+          pickupDate={local(booking.pickup_at).date}
+          pickupTime={local(booking.pickup_at).time}
+        />
+      )}
+
+      {booking.status === "picked_up" && !booking.has_review && <ReviewForm access={access} />}
+      {booking.status === "picked_up" && booking.has_review && <Alert kind="success">{t("reviewThanks")}</Alert>}
+
+      {booking.incidents.length > 0 && (
+        <Card>
+          <h2 className="font-semibold">{t("incidents")}</h2>
+          <ul className="mt-2 flex flex-col gap-2 text-sm">
+            {booking.incidents.map((i) => (
+              <li key={i.id}>
+                <span className="font-medium">{t(`incidentStatus_${i.status}`)}</span>
+                {i.decision && <span className="text-muted"> · {i.decision}</span>}
+              </li>
+            ))}
+          </ul>
+        </Card>
+      )}
+
+      {canIncident && (
+        <IncidentForm access={access} canSayClosed={booking.status === "paid" && new Date(booking.dropoff_at).getTime() - 30 * 60_000 <= nowMs} />
       )}
 
       <Link href={`/consignes/${loc.id}`} className="text-sm text-muted hover:underline">

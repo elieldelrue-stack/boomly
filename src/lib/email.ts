@@ -176,3 +176,44 @@ export async function sendAdminAlert(subject: string, text: string): Promise<voi
   const { error } = await client.emails.send({ from: FROM(), to, subject: `[Boomly] ${subject}`, text });
   if (error) console.error("Alerte admin :", error.message);
 }
+
+/** Après le retrait : demande d'avis au voyageur (une seule fois). */
+export async function sendReviewRequest(bookingId: string): Promise<void> {
+  const b = await loadBooking(bookingId);
+  const client = resend();
+  if (!b || !client) return;
+  const { data: row } = await createAdminClient().from("bookings").select("review_email_sent_at").eq("id", bookingId).single();
+  if (row?.review_email_sent_at) return;
+
+  const locale = b.locale === "en" ? "en" : "fr";
+  const t = createTranslator({ locale, messages: messages[locale], namespace: "Emails" });
+  const link = `${siteUrl()}/${locale}/reservation/${b.reference}?t=${b.access_token}#avis`;
+  const html = layout(
+    t("reviewTitle"),
+    `<p>${escape(t("hello", { name: b.customer_name }))}</p>
+<p>${escape(t("reviewIntro", { name: b.location.name }))}</p>
+<p style="margin-top:20px"><a href="${link}" style="background:#ea580c;color:#fff;padding:12px 18px;border-radius:10px;text-decoration:none;font-weight:bold">${escape(t("reviewCta"))}</a></p>`,
+  );
+  const { error } = await client.emails.send({ from: FROM(), to: b.customer_email, subject: t("reviewSubject", { name: b.location.name }), html });
+  if (error) {
+    console.error("E-mail avis :", error.message);
+    return;
+  }
+  await createAdminClient().from("bookings").update({ review_email_sent_at: new Date().toISOString() }).eq("id", b.id);
+}
+
+/** Confirmation d'annulation / remboursement au voyageur. */
+export async function sendCancellationEmail(bookingId: string, refundedCents: number): Promise<void> {
+  const b = await loadBooking(bookingId);
+  const client = resend();
+  if (!b || !client) return;
+  const locale = b.locale === "en" ? "en" : "fr";
+  const t = createTranslator({ locale, messages: messages[locale], namespace: "Emails" });
+  const html = layout(
+    t("cancelTitle"),
+    `<p>${escape(t("hello", { name: b.customer_name }))}</p>
+<p>${escape(t("cancelIntro", { reference: b.reference, amount: formatEuros(refundedCents, locale) }))}</p>`,
+  );
+  const { error } = await client.emails.send({ from: FROM(), to: b.customer_email, subject: t("cancelSubject", { reference: b.reference }), html });
+  if (error) console.error("E-mail annulation :", error.message);
+}

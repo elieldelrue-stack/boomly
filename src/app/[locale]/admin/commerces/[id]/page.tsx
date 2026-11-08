@@ -7,6 +7,10 @@ import { createClient } from "@/lib/supabase/server";
 import { getHours, LOCATION_COLUMNS } from "@/lib/partner-data";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { StatusActions } from "@/components/admin/StatusActions";
+import { getLocationStats } from "@/lib/admin-data";
+import { deleteReviewAction } from "@/lib/actions/admin";
+import { formatEuros } from "@/lib/pricing";
+import { getLocale } from "next-intl/server";
 import { Card } from "@/components/ui/form";
 import type { Location, Profile } from "@/lib/types";
 
@@ -39,10 +43,13 @@ async function Detail({ params }: { params: Promise<{ id: string }> }) {
   if (!data) notFound();
   const location = data as unknown as Location & { partner: Pick<Profile, "full_name" | "email" | "phone"> | null };
   const hours = await getHours(id);
+  const stats = await getLocationStats(id);
+  const locale = await getLocale();
+  const ta = await getTranslations("AdminOps");
 
   return (
     <div className="flex flex-col gap-6">
-      <Link href="/admin" className="text-sm text-muted hover:underline">
+      <Link href="/admin/commerces" className="text-sm text-muted hover:underline">
         {t("back")}
       </Link>
       <div className="flex flex-wrap items-center gap-3">
@@ -160,10 +167,41 @@ async function Detail({ params }: { params: Promise<{ id: string }> }) {
           </Card>
         </div>
 
-        <Card className="h-fit">
-          <h3 className="mb-3 font-semibold">{t("actions")}</h3>
-          <StatusActions id={location.id} status={location.status} />
-        </Card>
+        <div className="flex flex-col gap-6">
+          <Card className="h-fit">
+            <h3 className="mb-3 font-semibold">{t("actions")}</h3>
+            <StatusActions id={location.id} status={location.status} />
+          </Card>
+          <Card>
+            <h3 className="mb-3 font-semibold">{ta("locationStats")}</h3>
+            <dl className="grid grid-cols-2 gap-3 text-sm">
+              <div><dt className="text-muted">{ta("bookings")}</dt><dd className="text-lg font-semibold">{stats.bookings}</dd></div>
+              <div><dt className="text-muted">{ta("pickedUpCount")}</dt><dd className="text-lg font-semibold">{stats.pickedUp}</dd></div>
+              <div><dt className="text-muted">{ta("revenue")}</dt><dd className="text-lg font-semibold">{formatEuros(stats.revenueCents, locale)}</dd></div>
+              <div><dt className="text-muted">{ta("partners")}</dt><dd className="text-lg font-semibold">{formatEuros(stats.partnerCents, locale)}</dd></div>
+              <div><dt className="text-muted">{ta("rating")}</dt><dd className="text-lg font-semibold">{stats.ratingAvg ?? "—"} <span className="text-sm font-normal text-muted">({stats.reviews.length})</span></dd></div>
+            </dl>
+          </Card>
+          {stats.reviews.length > 0 && (
+            <Card>
+              <h3 className="mb-3 font-semibold">{ta("reviews")}</h3>
+              <ul className="flex flex-col gap-3 text-sm">
+                {stats.reviews.map((r) => (
+                  <li key={r.id} className="flex items-start justify-between gap-3 border-b border-stone-100 pb-2 last:border-0">
+                    <div>
+                      <p className="text-amber-500">{"★".repeat(r.rating)}<span className="ml-2 text-muted">{r.customer_first_name}</span></p>
+                      {r.comment && <p>{r.comment}</p>}
+                    </div>
+                    <form action={deleteReviewAction}>
+                      <input type="hidden" name="id" value={r.id} />
+                      <button type="submit" className="text-red-700 underline">{ta("deleteReview")}</button>
+                    </form>
+                  </li>
+                ))}
+              </ul>
+            </Card>
+          )}
+        </div>
       </div>
     </div>
   );

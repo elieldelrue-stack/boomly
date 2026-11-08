@@ -8,6 +8,7 @@ import { stripe } from "@/lib/stripe";
 import { siteUrl } from "@/lib/site-url";
 import { safeLocale } from "@/lib/locale";
 import { transferPartnerShare } from "@/lib/transfers";
+import { sendReviewRequest } from "@/lib/email";
 import type { FormState } from "@/lib/types";
 import { parisLocalToIso } from "@/lib/paris-time";
 
@@ -44,7 +45,10 @@ export async function pickupAction(_prev: FormState, formData: FormData): Promis
   if (error) return dbError(error.message);
 
   // Le virement Stripe part juste après la réponse (le commerçant n'attend pas).
-  after(() => transferPartnerShare(bookingId.data));
+  after(async () => {
+    await transferPartnerShare(bookingId.data);
+    await sendReviewRequest(bookingId.data);
+  });
   return { ok: true };
 }
 

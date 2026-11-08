@@ -104,6 +104,12 @@ async function Results({ searchParams }: { searchParams: Promise<Record<string, 
                       {tTypes(l.business_type)} · {l.address}, {l.city}
                     </p>
                     <OpeningInfo hours={l.hours} now={now} />
+                    {l.rating_avg !== null && (
+                      <p className="text-sm">
+                        <span className="text-amber-500">★</span> <span className="font-semibold">{l.rating_avg.toLocaleString(locale)}</span>{" "}
+                        <span className="text-muted">({l.rating_count})</span>
+                      </p>
+                    )}
                     <p className="mt-auto text-sm font-semibold text-brand-700">{t("from", { price: minPrice })}</p>
                   </div>
                 </Link>

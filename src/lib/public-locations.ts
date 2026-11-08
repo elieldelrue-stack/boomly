@@ -20,7 +20,11 @@ export type PublicLocation = {
   photos: string[];
   capacity_per_day: number;
   hours: OpeningSlot[];
+  rating_avg: number | null;
+  rating_count: number;
 };
+
+export type PublicReview = { rating: number; comment: string | null; customer_first_name: string | null; created_at: string };
 
 /** Tous les points de dépôt validés, mis en cache et rafraîchis à chaque validation/modification. */
 export async function getPublicLocations(): Promise<PublicLocation[]> {
@@ -44,8 +48,18 @@ export async function getPublicLocations(): Promise<PublicLocation[]> {
     return [];
   }
 
+  // Notes moyennes (avis publiés)
+  const { data: reviews } = await supabase.from("reviews").select("location_id, rating");
+  const stats = new Map<string, { sum: number; n: number }>();
+  for (const r of reviews ?? []) {
+    const s = stats.get(r.location_id) ?? { sum: 0, n: 0 };
+    stats.set(r.location_id, { sum: s.sum + r.rating, n: s.n + 1 });
+  }
+
   return (data ?? []).map(({ opening_hours, ...loc }) => ({
     ...loc,
+    rating_avg: stats.has(loc.id) ? Math.round((stats.get(loc.id)!.sum / stats.get(loc.id)!.n) * 10) / 10 : null,
+    rating_count: stats.get(loc.id)?.n ?? 0,
     hours: (opening_hours ?? [])
       .map((h: { weekday: number; opens_at: string; closes_at: string }) => ({
         weekday: h.weekday,
@@ -59,4 +73,19 @@ export async function getPublicLocations(): Promise<PublicLocation[]> {
 export async function getPublicLocation(id: string): Promise<PublicLocation | null> {
   const all = await getPublicLocations();
   return all.find((l) => l.id === id) ?? null;
+}
+
+/** Derniers avis publiés d'un point de dépôt. */
+export async function getPublicReviews(locationId: string): Promise<PublicReview[]> {
+  "use cache";
+  cacheTag(LOCATIONS_TAG);
+  cacheLife("minutes");
+  if (!process.env.SUPABASE_SERVICE_ROLE_KEY) return [];
+  const { data } = await createAdminClient()
+    .from("reviews")
+    .select("rating, comment, customer_first_name, created_at")
+    .eq("location_id", locationId)
+    .order("created_at", { ascending: false })
+    .limit(10);
+  return data ?? [];
 }

@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { connection } from "next/server";
 import { Link } from "@/i18n/navigation";
-import { getPublicLocation } from "@/lib/public-locations";
+import { getPublicLocation, getPublicReviews } from "@/lib/public-locations";
 import { getSettings } from "@/lib/settings";
 import { parisNow } from "@/lib/paris-time";
 import { BookingForm } from "@/components/travel/BookingForm";
@@ -27,8 +27,9 @@ async function Detail({ params }: { params: Promise<{ id: string }> }) {
   const location = await getPublicLocation(id);
   if (!location) notFound();
 
-  const [settings, t, tTypes, tDays, tf] = await Promise.all([
+  const [settings, reviews, t, tTypes, tDays, tf] = await Promise.all([
     getSettings(),
+    getPublicReviews(location.id),
     getTranslations("Booking"),
     getTranslations("BusinessTypes"),
     getTranslations("Weekdays"),
@@ -68,8 +69,14 @@ async function Detail({ params }: { params: Promise<{ id: string }> }) {
                 {t("directions")} ↗
               </a>
             </p>
-            <div className="mt-2">
+            <div className="mt-2 flex flex-wrap items-center gap-x-3">
               <OpeningInfo hours={location.hours} now={now} />
+              {location.rating_avg !== null && (
+                <a href="#avis" className="text-sm">
+                  <span className="text-amber-500">★</span> <span className="font-semibold">{location.rating_avg}</span>{" "}
+                  <span className="text-muted underline">{t("reviewsCount", { count: location.rating_count })}</span>
+                </a>
+              )}
             </div>
           </div>
 
@@ -94,6 +101,24 @@ async function Detail({ params }: { params: Promise<{ id: string }> }) {
               })}
             </ul>
           </Card>
+
+          {reviews.length > 0 && (
+            <Card>
+              <h2 id="avis" className="mb-3 font-semibold">{t("reviewsTitle")}</h2>
+              <ul className="flex flex-col gap-3">
+                {reviews.map((r, i) => (
+                  <li key={i} className="border-b border-stone-100 pb-3 last:border-0">
+                    <p className="text-amber-500" aria-label={`${r.rating}/5`}>
+                      {"★".repeat(r.rating)}
+                      <span className="text-stone-300">{"★".repeat(5 - r.rating)}</span>
+                      <span className="ml-2 text-sm text-muted">{r.customer_first_name}</span>
+                    </p>
+                    {r.comment && <p className="mt-1 text-sm">{r.comment}</p>}
+                  </li>
+                ))}
+              </ul>
+            </Card>
+          )}
 
           <div className="h-64 overflow-hidden rounded-2xl border border-stone-200">
             <LocationsMap

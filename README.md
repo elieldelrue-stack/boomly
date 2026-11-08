@@ -33,9 +33,11 @@ psql -d base_de_test -f supabase/migrations/20261108000000_partners.sql
 psql -d base_de_test -f supabase/migrations/20261108010000_bookings.sql
 psql -d base_de_test -f supabase/migrations/20261108020000_payments.sql
 psql -d base_de_test -f supabase/migrations/20261108030000_handover.sql
+psql -d base_de_test -f supabase/migrations/20261108040000_admin.sql
 psql -d base_de_test -f supabase/tests/rls_partners_test.sql   # sur une base neuve
 psql -d base_de_test -f supabase/tests/bookings_test.sql       # sur une autre base neuve
 psql -d base_de_test -f supabase/tests/handover_test.sql       # sur une autre base neuve
+psql -d base_de_test -f supabase/tests/admin_test.sql          # sur une autre base neuve
 ```
 
 ## Devenir admin

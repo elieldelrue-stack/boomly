@@ -22,6 +22,11 @@ export type TravelerBooking = {
   status: string;
   expires_at: string | null;
   stripe_checkout_session_id: string | null;
+  refunded_cents: number;
+  dropped_off_at: string | null;
+  picked_up_at: string | null;
+  has_review: boolean;
+  incidents: { id: number; type: string; status: string; created_at: string; decision: string | null }[];
   location: Pick<PublicLocation, "id" | "name" | "address" | "postal_code" | "city" | "latitude" | "longitude">;
 };
 
@@ -39,13 +44,14 @@ export async function getBookingForTraveler(reference: string, token: string): P
   const { data } = await supabase
     .from("bookings")
     .select(
-      "id, reference, access_token, customer_name, customer_email, bags_small, bags_medium, bags_large, bag_count, dropoff_at, pickup_at, days, price_small_cents, price_medium_cents, price_large_cents, total_cents, status, expires_at, stripe_checkout_session_id, location:locations(id, name, address, postal_code, city, latitude, longitude)",
+      "id, reference, access_token, customer_name, customer_email, bags_small, bags_medium, bags_large, bag_count, dropoff_at, pickup_at, days, price_small_cents, price_medium_cents, price_large_cents, total_cents, status, expires_at, stripe_checkout_session_id, refunded_cents, dropped_off_at, picked_up_at, reviews(id), incidents(id, type, status, created_at, decision), location:locations(id, name, address, postal_code, city, latitude, longitude)",
     )
     .eq("reference", reference)
     .maybeSingle();
 
   if (!data || !sameSecret(data.access_token, token)) return null;
-  const { access_token: _secret, ...booking } = data;
+  const { access_token: _secret, reviews, ...booking } = data as typeof data & { reviews: unknown };
   void _secret;
-  return booking as unknown as TravelerBooking;
+  const hasReview = Array.isArray(reviews) ? reviews.length > 0 : !!reviews;
+  return { ...booking, has_review: hasReview } as unknown as TravelerBooking;
 }
