@@ -12,5 +12,5 @@ export async function proxy(request: NextRequest) {
 
 export const config = {
   // Toutes les pages sauf l'API, les fichiers internes de Next.js et les fichiers statiques.
-  matcher: "/((?!api|_next|_vercel|.*\\..*).*)",
+  matcher: "/((?!api|auth|_next|_vercel|.*\\..*).*)",
 };

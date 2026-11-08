@@ -1,13 +1,19 @@
-import { getFormatter, getTranslations } from "next-intl/server";
-
-// Prix affiché à titre indicatif pour l'instant. À l'étape 3, il sera lu
-// dans la table "settings" (réglable depuis l'admin) et calculé côté serveur.
-const DISPLAY_PRICE_EUR = 5;
+import { getLocale, getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
+import { getSettings } from "@/lib/settings";
+import { BAG_SIZES, formatEuros, priceForSize } from "@/lib/pricing";
 
 export default async function HomePage() {
   const t = await getTranslations("Home");
-  const format = await getFormatter();
-  const price = format.number(DISPLAY_PRICE_EUR, { style: "currency", currency: "EUR", maximumFractionDigits: 0 });
+  const ts = await getTranslations("Sizes");
+  const locale = await getLocale();
+  // Prix lus dans la base (réglables depuis l'admin).
+  const settings = await getSettings();
+  const sizes = BAG_SIZES.map((size) => ({
+    size,
+    price: formatEuros(priceForSize(settings, size), locale),
+  }));
+  const minPrice = formatEuros(Math.min(...BAG_SIZES.map((s) => priceForSize(settings, s))), locale);
 
   const steps = [
     { n: 1, title: t("step1Title"), text: t("step1Text") },
@@ -46,9 +52,22 @@ export default async function HomePage() {
           </form>
           <p id="search-soon" className="mt-2 text-sm text-muted">{t("searchSoon")}</p>
 
-          <div className="mt-8 inline-flex flex-col rounded-2xl border border-stone-200 bg-white px-5 py-4 shadow-sm">
-            <span className="text-2xl font-bold text-brand-700">{t("price", { price })}</span>
-            <span className="text-sm text-muted">{t("priceNote")}</span>
+          <div className="mt-8 max-w-xl rounded-2xl border border-stone-200 bg-white p-5 shadow-sm">
+            <p className="text-xl font-bold text-brand-700">{t("priceFrom", { price: minPrice })}</p>
+            <ul className="mt-3 divide-y divide-stone-100">
+              {sizes.map(({ size, price }) => (
+                <li key={size} className="flex items-center justify-between gap-4 py-2">
+                  <span>
+                    <span className="font-medium">{ts(size)}</span>
+                    <span className="block text-sm text-muted">{ts(`${size}Hint`)}</span>
+                  </span>
+                  <span className="shrink-0 font-semibold">
+                    {price} <span className="text-sm font-normal text-muted">{ts("perDay")}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-2 text-sm text-muted">{t("priceNote")}</p>
           </div>
         </div>
       </section>
@@ -74,9 +93,12 @@ export default async function HomePage() {
             <h2 className="text-2xl font-bold">{t("partnerTitle")}</h2>
             <p className="mt-2 text-stone-300">{t("partnerText")}</p>
           </div>
-          <span className="inline-flex shrink-0 items-center justify-center rounded-xl bg-white/10 px-5 py-3 font-semibold">
-            {t("partnerSoon")}
-          </span>
+          <Link
+            href="/partenaire/inscription"
+            className="inline-flex shrink-0 items-center justify-center rounded-xl bg-brand-600 px-5 py-3 font-semibold text-white hover:bg-brand-700"
+          >
+            {t("partnerCta")}
+          </Link>
         </div>
       </section>
     </>

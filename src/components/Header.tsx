@@ -14,6 +14,9 @@ export async function Header() {
           <Logo />
         </Link>
         <nav className="flex items-center gap-4 text-sm font-medium">
+          <Link href="/partenaire" className="text-muted hover:text-ink">
+            {t("partner")}
+          </Link>
           <Link
             href="/"
             locale={other}
