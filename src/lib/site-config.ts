@@ -23,7 +23,7 @@ export const SOCIALS = {
   facebook: "",
 };
 
-export const CONTACT_EMAIL = "contact@boomlyluggage.com";
+export const CONTACT_EMAIL = "contact@boomly.fr";
 
 /** Villes proposées dans le pied de page (lien vers la recherche autour de ce point). */
 export const CITIES = [
