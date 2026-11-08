@@ -41,7 +41,7 @@ export async function getBookingForTraveler(reference: string, token: string): P
   if (!/^BMY-[A-Z0-9]{6}$/.test(reference) || !/^[0-9a-f]{64}$/.test(token)) return null;
 
   const supabase = createAdminClient();
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from("bookings")
     .select(
       "id, reference, access_token, customer_name, customer_email, bags_small, bags_medium, bags_large, bag_count, dropoff_at, pickup_at, days, price_small_cents, price_medium_cents, price_large_cents, total_cents, status, expires_at, stripe_checkout_session_id, refunded_cents, dropped_off_at, picked_up_at, reviews(id), incidents(id, type, status, created_at, decision), location:locations(id, name, address, postal_code, city, latitude, longitude)",
@@ -49,6 +49,7 @@ export async function getBookingForTraveler(reference: string, token: string): P
     .eq("reference", reference)
     .maybeSingle();
 
+  if (error) console.error("Lecture de la réservation :", error.message);
   if (!data || !sameSecret(data.access_token, token)) return null;
   const { access_token: _secret, reviews, ...booking } = data as typeof data & { reviews: unknown };
   void _secret;
