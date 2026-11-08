@@ -61,3 +61,19 @@ export function timeOptions(hours: OpeningSlot[], weekday: number, minTime?: str
   }
   return out;
 }
+
+/** Décalage (en minutes) de l'heure de Paris par rapport à UTC à un instant donné (+60 l'hiver, +120 l'été). */
+export function parisOffsetMinutes(at: Date): number {
+  const parts = new Intl.DateTimeFormat("en-US", { timeZone: TZ, timeZoneName: "longOffset" }).formatToParts(at);
+  const m = parts.find((p) => p.type === "timeZoneName")?.value.match(/GMT([+-])(\d{2}):(\d{2})/);
+  if (!m) return 0;
+  const v = Number(m[2]) * 60 + Number(m[3]);
+  return m[1] === "-" ? -v : v;
+}
+
+/** "AAAA-MM-JJ" + "HH:MM" à Paris -> date ISO (UTC), heure d'été comprise. */
+export function parisLocalToIso(date: string, time: string): string {
+  const naive = Date.parse(`${date}T${time}:00Z`);
+  const offset = parisOffsetMinutes(new Date(naive));
+  return new Date(naive - offset * 60_000).toISOString();
+}

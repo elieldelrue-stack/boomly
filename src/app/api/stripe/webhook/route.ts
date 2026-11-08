@@ -24,13 +24,15 @@ export async function POST(request: NextRequest) {
       case "checkout.session.completed":
       case "checkout.session.async_payment_succeeded": {
         const session = event.data.object;
-        if (session.payment_status === "paid") await markPaid(session);
+        if (session.payment_status !== "paid") break;
+        if (session.metadata?.kind === "late_fee") await markLateFeePaid(session);
+        else await markPaid(session);
         break;
       }
       case "checkout.session.expired": {
         const session = event.data.object;
         const bookingId = session.metadata?.booking_id;
-        if (bookingId) {
+        if (bookingId && session.metadata?.kind !== "late_fee") {
           await createAdminClient()
             .from("bookings")
             .update({ status: "expired" })
@@ -90,4 +92,21 @@ async function markPaid(session: Stripe.Checkout.Session) {
   // Les e-mails ne partent qu'une fois (dates d'envoi enregistrées).
   await sendBookingConfirmation(bookingId);
   await sendPartnerNotification(bookingId);
+}
+
+/** Supplément de retard payé par le voyageur : le commerçant peut alors rendre les bagages. */
+async function markLateFeePaid(session: Stripe.Checkout.Session) {
+  const bookingId = session.metadata?.booking_id;
+  if (!bookingId) return;
+  const { error } = await createAdminClient()
+    .from("bookings")
+    .update({
+      late_fee_paid_at: new Date().toISOString(),
+      late_fee_cents: session.amount_total ?? 0,
+      late_fee_payment_intent_id: typeof session.payment_intent === "string" ? session.payment_intent : session.payment_intent?.id,
+    })
+    .eq("id", bookingId)
+    .eq("late_fee_checkout_session_id", session.id)
+    .is("late_fee_paid_at", null);
+  if (error) throw new Error(error.message);
 }

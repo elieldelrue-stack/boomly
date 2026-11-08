@@ -104,6 +104,15 @@
       "notPending": "Cette réservation n’est plus en attente de paiement.",
       "expired": "Le délai de paiement est dépassé. Refaites une réservation.",
       "stripe": "Le service de paiement ne répond pas. Réessayez dans un instant."
+    },
+    "closureDates": "Dates invalides : la fin doit être après le début.",
+    "handover": {
+      "not_found": "Réservation introuvable pour votre commerce.",
+      "wrong_status": "Cette action n’est plus possible pour cette réservation (rechargez la page).",
+      "photos_required": "Ajoutez au moins une photo des bagages.",
+      "photos_invalid": "Photo invalide, reprenez la photo.",
+      "late_fee_due": "Le supplément de retard doit d’abord être payé.",
+      "generic": "Une erreur est survenue. Réessayez."
     }
   },
   "Auth": {
@@ -151,7 +160,6 @@
     "capacity": "{count} bagages maximum par jour",
     "saved": "Modifications enregistrées.",
     "adminLink": "Espace admin",
-    "comingSoon": "Bientôt ici : réservations du jour, scanner de code QR, revenus et paiements Stripe.",
     "paymentsTitle": "Paiements",
     "paymentsTodo": "Pour recevoir vos gains, créez votre compte de paiement sécurisé Stripe : identité et IBAN. Obligatoire avant la mise en ligne.",
     "paymentsPending": "Stripe vérifie vos informations. Cela prend généralement quelques minutes, parfois plus si des documents manquent.",
@@ -160,7 +168,29 @@
     "paymentsHint": "Vous serez redirigé vers Stripe, notre partenaire de paiement. Boomly ne voit jamais vos coordonnées bancaires.",
     "paymentsReady": "Paiements activés",
     "paymentsReadyText": "Vos gains sont versés automatiquement sur votre compte bancaire après chaque retrait de bagages.",
-    "paymentsDashboard": "Voir mes virements"
+    "paymentsDashboard": "Voir mes virements",
+    "scan": "Scanner un code client",
+    "todayTitle": "Aujourd’hui",
+    "inStore": "{count, plural, =0 {Aucun bagage en garde} one {# bagage en garde} other {# bagages en garde}}",
+    "todayEmpty": "Aucun dépôt ni retrait prévu aujourd’hui.",
+    "bags": "{count, plural, one {# bagage} other {# bagages}}",
+    "dropoffAt": "dépôt {time}",
+    "pickupAt": "retrait {time}",
+    "earningsTitle": "Mes revenus",
+    "earningsUpcoming": "À venir : {amount} (versé après chaque retrait)",
+    "earningsEmpty": "Pas encore de revenus versés.",
+    "bookingsCount": "{count, plural, one {# réservation} other {# réservations}}",
+    "availabilityTitle": "Disponibilité",
+    "pausedNow": "Pause en cours : plus de nouvelles réservations aujourd’hui.",
+    "pauseToday": "Je suis complet aujourd’hui",
+    "pauseHint": "Les réservations déjà faites restent valables.",
+    "pauseLabel": "pause",
+    "remove": "Retirer",
+    "closureTitle": "Fermeture exceptionnelle",
+    "from": "Du",
+    "to": "Au",
+    "closureReason": "Motif (facultatif)",
+    "closureAdd": "Ajouter la fermeture"
   },
   "LocationForm": {
     "titleNew": "Inscrire mon commerce",
@@ -306,7 +336,9 @@
     "qrAlt": "Code QR de la réservation",
     "showQr": "Présentez ce code QR au commerçant au dépôt et au retrait. Il vous a aussi été envoyé par e-mail.",
     "cancelled": "Cette réservation a été annulée.",
-    "refunded": "Cette réservation a été remboursée."
+    "refunded": "Cette réservation a été remboursée.",
+    "droppedOff": "{count, plural, one {Bagage déposé} other {# bagages déposés}} – gardez ce code pour le retrait",
+    "pickedUp": "Bagages récupérés. Merci d’avoir utilisé Boomly !"
   },
   "Emails": {
     "confirmSubject": "Réservation confirmée {reference} · {name}",
@@ -330,5 +362,59 @@
     "bagCount": "Nombre de bagages",
     "earnings": "Vos gains",
     "openDashboard": "Ouvrir mon espace"
+  },
+  "BookingStatus": {
+    "pending_payment": "Non payée",
+    "paid": "À déposer",
+    "dropped_off": "En garde",
+    "picked_up": "Récupérée",
+    "cancelled": "Annulée",
+    "refunded": "Remboursée",
+    "expired": "Expirée"
+  },
+  "Scanner": {
+    "title": "Scanner un code",
+    "hint": "Placez le code QR du client dans le cadre.",
+    "cameraError": "Caméra indisponible. Autorisez l’accès à la caméra, ou saisissez le code ci-dessous.",
+    "manualLabel": "Ou saisissez le code de réservation",
+    "open": "Ouvrir"
+  },
+  "Handover": {
+    "back": "Mon espace",
+    "notFound": "La réservation {reference} n’existe pas ou ne concerne pas votre commerce.",
+    "scanAnother": "Scanner un autre code",
+    "plannedDropoff": "Dépôt prévu",
+    "plannedPickup": "Retrait prévu",
+    "doneAt": "fait le {when}",
+    "yourShare": "Votre part : {amount}",
+    "labelsTitle": "Étiquettes",
+    "labelsHint": "Écrivez un numéro sur une étiquette attachée à chaque bagage.",
+    "dropoffTitle": "Dépôt des bagages",
+    "checkCount": "J’ai vérifié qu’il y a bien {count, plural, one {# bagage} other {# bagages}}",
+    "photosTitle": "Photos des bagages (obligatoire)",
+    "photosHint": "Prenez tous les bagages en photo, étiquettes visibles. Ces photos protègent en cas de litige.",
+    "takePhoto": "Prendre une photo",
+    "uploading": "Envoi…",
+    "uploadError": "Une photo n’a pas pu être envoyée. Réessayez.",
+    "photoRequired": "Ajoutez au moins une photo pour confirmer.",
+    "confirmDropoff": "Confirmer le dépôt",
+    "pickupTitle": "Retrait des bagages",
+    "pickupConfirm": "Confirmer que vous rendez les bagages au client ?",
+    "confirmPickup": "Confirmer le retrait",
+    "lateTitle": "Retrait en retard : {days, plural, one {# jour} other {# jours}} de plus",
+    "lateText": "Le client doit régler un supplément de {amount} avant de récupérer ses bagages.",
+    "lateCharge": "Faire payer {amount}",
+    "lateQrAlt": "Code QR de paiement",
+    "lateScan": "Le client scanne ce code avec son téléphone pour payer. Cette page se met à jour automatiquement.",
+    "lateOpenHere": "Ou payer sur ce téléphone",
+    "latePaid": "Supplément payé.",
+    "waive": "Rendre sans supplément",
+    "waiveConfirm": "Rendre les bagages sans faire payer le supplément ? Vous ne toucherez pas votre part du supplément.",
+    "pickedUp": "Bagages rendus. Votre part ({amount}) est virée sur votre compte Stripe.",
+    "doNotAccept": "Cette réservation n’est pas payée ou a été annulée : n’acceptez pas les bagages.",
+    "scanVisitor": "Ce code est à présenter au commerçant Boomly lors du dépôt et du retrait de vos bagages.",
+    "scanPartnerLogin": "Vous êtes le commerçant ? Connectez-vous",
+    "lateThanksTitle": "Paiement reçu",
+    "lateThanksText": "Montrez cet écran au commerçant pour récupérer vos bagages."
   }
 }

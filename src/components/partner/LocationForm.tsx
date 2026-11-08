@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { saveLocationAction } from "@/lib/actions/location";
 import { createClient } from "@/lib/supabase/client";
+import { compressImage } from "@/lib/image";
 import { useFormAction } from "@/components/ui/useFormAction";
 import { Alert, Button, Card, Field, Input, inputClass } from "@/components/ui/form";
 import { BUSINESS_TYPES, type FormState, type Location, type OpeningSlot } from "@/lib/types";
@@ -36,22 +37,6 @@ function toDays(hours: OpeningSlot[]): DaySlots[] {
 
 function toSlots(days: DaySlots[]): OpeningSlot[] {
   return days.flatMap((d, i) => (d.open ? d.slots.map((s) => ({ weekday: i + 1, ...s })) : []));
-}
-
-/** Réduit une photo (max 1600 px, JPEG) avant l'envoi : plus rapide sur mobile. */
-async function compressImage(file: File): Promise<Blob> {
-  try {
-    const bitmap = await createImageBitmap(file);
-    const scale = Math.min(1, 1600 / Math.max(bitmap.width, bitmap.height));
-    const canvas = document.createElement("canvas");
-    canvas.width = Math.round(bitmap.width * scale);
-    canvas.height = Math.round(bitmap.height * scale);
-    canvas.getContext("2d")!.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
-    const blob = await new Promise<Blob | null>((r) => canvas.toBlob(r, "image/jpeg", 0.82));
-    return blob ?? file;
-  } catch {
-    return file;
-  }
 }
 
 export function LocationForm({

@@ -104,6 +104,15 @@
       "notPending": "This booking is no longer awaiting payment.",
       "expired": "The payment window has passed. Please book again.",
       "stripe": "The payment service is not responding. Please try again."
+    },
+    "closureDates": "Invalid dates: the end must be after the start.",
+    "handover": {
+      "not_found": "Booking not found for your shop.",
+      "wrong_status": "This action is no longer possible for this booking (reload the page).",
+      "photos_required": "Add at least one photo of the bags.",
+      "photos_invalid": "Invalid photo, take it again.",
+      "late_fee_due": "The late surcharge must be paid first.",
+      "generic": "Something went wrong. Please try again."
     }
   },
   "Auth": {
@@ -151,7 +160,6 @@
     "capacity": "Up to {count} bags per day",
     "saved": "Changes saved.",
     "adminLink": "Admin area",
-    "comingSoon": "Coming soon here: today's bookings, QR code scanner, earnings and Stripe payouts.",
     "paymentsTitle": "Payouts",
     "paymentsTodo": "To receive your earnings, create your secure Stripe payout account: identity and IBAN. Required before going live.",
     "paymentsPending": "Stripe is checking your details. It usually takes a few minutes, longer if documents are missing.",
@@ -160,7 +168,29 @@
     "paymentsHint": "You'll be redirected to Stripe, our payment partner. Boomly never sees your bank details.",
     "paymentsReady": "Payouts enabled",
     "paymentsReadyText": "Your earnings are paid automatically to your bank account after each bag pick-up.",
-    "paymentsDashboard": "View my payouts"
+    "paymentsDashboard": "View my payouts",
+    "scan": "Scan a customer code",
+    "todayTitle": "Today",
+    "inStore": "{count, plural, =0 {No bags in storage} one {# bag in storage} other {# bags in storage}}",
+    "todayEmpty": "No drop-offs or pick-ups planned today.",
+    "bags": "{count, plural, one {# bag} other {# bags}}",
+    "dropoffAt": "drop-off {time}",
+    "pickupAt": "pick-up {time}",
+    "earningsTitle": "My earnings",
+    "earningsUpcoming": "Upcoming: {amount} (paid after each pick-up)",
+    "earningsEmpty": "No earnings paid yet.",
+    "bookingsCount": "{count, plural, one {# booking} other {# bookings}}",
+    "availabilityTitle": "Availability",
+    "pausedNow": "Paused: no new bookings today.",
+    "pauseToday": "I’m full today",
+    "pauseHint": "Existing bookings remain valid.",
+    "pauseLabel": "pause",
+    "remove": "Remove",
+    "closureTitle": "Exceptional closure",
+    "from": "From",
+    "to": "To",
+    "closureReason": "Reason (optional)",
+    "closureAdd": "Add closure"
   },
   "LocationForm": {
     "titleNew": "Register my business",
@@ -306,7 +336,9 @@
     "qrAlt": "Booking QR code",
     "showQr": "Show this QR code to the shopkeeper at drop-off and pick-up. It was also sent to you by email.",
     "cancelled": "This booking was cancelled.",
-    "refunded": "This booking was refunded."
+    "refunded": "This booking was refunded.",
+    "droppedOff": "{count, plural, one {Bag dropped off} other {# bags dropped off}} – keep this code for pick-up",
+    "pickedUp": "Bags picked up. Thank you for using Boomly!"
   },
   "Emails": {
     "confirmSubject": "Booking confirmed {reference} · {name}",
@@ -330,5 +362,59 @@
     "bagCount": "Number of bags",
     "earnings": "Your earnings",
     "openDashboard": "Open my area"
+  },
+  "BookingStatus": {
+    "pending_payment": "Unpaid",
+    "paid": "To drop off",
+    "dropped_off": "In storage",
+    "picked_up": "Picked up",
+    "cancelled": "Cancelled",
+    "refunded": "Refunded",
+    "expired": "Expired"
+  },
+  "Scanner": {
+    "title": "Scan a code",
+    "hint": "Place the customer’s QR code inside the frame.",
+    "cameraError": "Camera unavailable. Allow camera access or type the code below.",
+    "manualLabel": "Or type the booking code",
+    "open": "Open"
+  },
+  "Handover": {
+    "back": "My area",
+    "notFound": "Booking {reference} doesn’t exist or isn’t for your shop.",
+    "scanAnother": "Scan another code",
+    "plannedDropoff": "Planned drop-off",
+    "plannedPickup": "Planned pick-up",
+    "doneAt": "done {when}",
+    "yourShare": "Your share: {amount}",
+    "labelsTitle": "Tags",
+    "labelsHint": "Write a number on a tag attached to each bag.",
+    "dropoffTitle": "Bag drop-off",
+    "checkCount": "I checked there {count, plural, one {is # bag} other {are # bags}}",
+    "photosTitle": "Photos of the bags (required)",
+    "photosHint": "Photograph all bags with tags visible. These photos protect you in case of a dispute.",
+    "takePhoto": "Take a photo",
+    "uploading": "Uploading…",
+    "uploadError": "A photo couldn’t be uploaded. Try again.",
+    "photoRequired": "Add at least one photo to confirm.",
+    "confirmDropoff": "Confirm drop-off",
+    "pickupTitle": "Bag pick-up",
+    "pickupConfirm": "Confirm you are handing the bags back to the customer?",
+    "confirmPickup": "Confirm pick-up",
+    "lateTitle": "Late pick-up: {days, plural, one {# extra day} other {# extra days}}",
+    "lateText": "The customer must pay a {amount} surcharge before collecting their bags.",
+    "lateCharge": "Charge {amount}",
+    "lateQrAlt": "Payment QR code",
+    "lateScan": "The customer scans this code with their phone to pay. This page updates automatically.",
+    "lateOpenHere": "Or pay on this phone",
+    "latePaid": "Surcharge paid.",
+    "waive": "Hand back without surcharge",
+    "waiveConfirm": "Hand back the bags without charging the surcharge? You won’t receive your share of it.",
+    "pickedUp": "Bags handed back. Your share ({amount}) is transferred to your Stripe account.",
+    "doNotAccept": "This booking is unpaid or cancelled: do not accept the bags.",
+    "scanVisitor": "Show this code to the Boomly shopkeeper when dropping off and picking up your bags.",
+    "scanPartnerLogin": "Are you the shopkeeper? Log in",
+    "lateThanksTitle": "Payment received",
+    "lateThanksText": "Show this screen to the shopkeeper to collect your bags."
   }
 }

@@ -8,6 +8,9 @@ import { Alert, Card, PageShell } from "@/components/ui/form";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { StripeCard } from "@/components/partner/StripeCard";
 import { syncStripeStatus } from "@/lib/stripe-connect";
+import { getClosures } from "@/lib/partner-bookings";
+import { TodayBookings, EarningsCard } from "@/components/partner/DashboardSections";
+import { AvailabilityCard } from "@/components/partner/AvailabilityCard";
 
 export default async function PartnerHomePage({ searchParams }: PageProps<"/[locale]/partenaire">) {
   const t = await getTranslations("Common");
@@ -80,7 +83,7 @@ async function Dashboard({ searchParams }: { searchParams: Promise<Record<string
           </Link>
         </Card>
       ) : (
-        <Card>
+        <Card className={location.status === "active" ? "order-last" : ""}>
           <p className="text-sm font-medium text-muted">{t("statusTitle")}</p>
           <div className="mt-2 flex flex-wrap items-center gap-3">
             <h2 className="text-xl font-semibold">{location.name}</h2>
@@ -102,6 +105,20 @@ async function Dashboard({ searchParams }: { searchParams: Promise<Record<string
         </Card>
       )}
 
+      {location && location.status === "active" && (
+        <>
+          <Link
+            href="/partenaire/scanner"
+            className="flex h-14 items-center justify-center gap-2 rounded-2xl bg-brand-600 text-lg font-bold text-white shadow-sm hover:bg-brand-700"
+          >
+            📷 {t("scan")}
+          </Link>
+          <TodayBookings locationId={location.id} />
+          <Availability locationId={location.id} />
+          <EarningsCard locationId={location.id} />
+        </>
+      )}
+
       {location && (
         <StripeCard
           hasAccount={!!location.stripe_account_id}
@@ -109,8 +126,11 @@ async function Dashboard({ searchParams }: { searchParams: Promise<Record<string
           payoutsEnabled={stripeStatus.payoutsEnabled}
         />
       )}
-
-      <p className="text-sm text-muted">{t("comingSoon")}</p>
     </div>
   );
+}
+
+async function Availability({ locationId }: { locationId: string }) {
+  const { closures, pausedNow } = await getClosures(locationId);
+  return <AvailabilityCard closures={closures} pausedNow={pausedNow} />;
 }

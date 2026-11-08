@@ -55,7 +55,7 @@ async function Reservation({
     ] as const
   ).filter(([, n]) => n > 0);
   const loc = booking.location;
-  const confirmed = ["paid", "dropped_off", "picked_up"].includes(booking.status);
+  const confirmed = ["paid", "dropped_off"].includes(booking.status);
   const waitingForStripe = booking.status === "pending_payment" && paid === "1";
   const qr = confirmed ? await qrSvg(booking.reference) : null;
 
@@ -74,7 +74,9 @@ async function Reservation({
       )}
       {confirmed && (
         <Card className="border-green-200 bg-green-50 text-center">
-          <p className="text-lg font-bold text-green-800">✓ {t("confirmed")}</p>
+          <p className="text-lg font-bold text-green-800">
+            ✓ {booking.status === "dropped_off" ? t("droppedOff", { count: booking.bag_count }) : t("confirmed")}
+          </p>
           <div
             className="mx-auto mt-4 w-52 rounded-xl bg-white p-2 [&_svg]:h-auto [&_svg]:w-full"
             aria-label={t("qrAlt")}
@@ -84,6 +86,7 @@ async function Reservation({
           <p className="mt-3 text-sm text-green-900">{t("showQr")}</p>
         </Card>
       )}
+      {booking.status === "picked_up" && <Alert kind="success">{t("pickedUp")}</Alert>}
       {booking.status === "expired" && <Alert>{t("expired")}</Alert>}
       {booking.status === "cancelled" && <Alert>{t("cancelled")}</Alert>}
       {booking.status === "refunded" && <Alert>{t("refunded")}</Alert>}
