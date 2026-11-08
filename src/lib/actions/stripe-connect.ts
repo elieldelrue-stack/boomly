@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { stripe } from "@/lib/stripe";
+import { createRecipientAccount, onboardingLink } from "@/lib/stripe-connect";
 import { siteUrl } from "@/lib/site-url";
 import { safeLocale } from "@/lib/locale";
 import type { FormState } from "@/lib/types";
@@ -27,38 +28,19 @@ export async function startStripeOnboardingAction(_prev: FormState, formData: Fo
     let accountId = location.stripe_account_id as string | null;
     if (!accountId) {
       const partner = location.partner as unknown as { email: string } | null;
-      const account = await stripe().accounts.create(
-        {
-          country: "FR",
-          email: partner?.email ?? auth.user.email,
-          controller: {
-            fees: { payer: "application" },
-            losses: { payments: "application" },
-            requirement_collection: "stripe",
-            stripe_dashboard: { type: "express" },
-          },
-          capabilities: { transfers: { requested: true } },
-          business_profile: {
-            name: location.name,
-            product_description: "Consigne à bagages partenaire Boomly",
-          },
-          metadata: { location_id: location.id },
-        },
-        { idempotencyKey: `connect-account-${location.id}` },
-      );
-      accountId = account.id;
+      accountId = await createRecipientAccount({
+        locationId: location.id,
+        name: location.name,
+        email: partner?.email ?? auth.user.email ?? "",
+      });
       // Écrit par le serveur : le commerçant ne peut pas modifier ce champ lui-même.
       await createAdminClient().from("locations").update({ stripe_account_id: accountId }).eq("id", location.id);
     }
-
-    const link = await stripe().accountLinks.create({
-      account: accountId,
-      type: "account_onboarding",
-      collection_options: { fields: "eventually_due" },
-      refresh_url: `${siteUrl()}/${locale}/partenaire?stripe=refresh`,
-      return_url: `${siteUrl()}/${locale}/partenaire?stripe=return`,
-    });
-    url = link.url;
+    url = await onboardingLink(
+      accountId,
+      `${siteUrl()}/${locale}/partenaire?stripe=refresh`,
+      `${siteUrl()}/${locale}/partenaire?stripe=return`,
+    );
   } catch (e) {
     console.error("Stripe Connect :", (e as Error).message);
     return { error: "checkout.stripe" };
