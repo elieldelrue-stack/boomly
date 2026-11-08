@@ -1,5 +1,6 @@
 import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { TravelerSearch } from "@/components/travel/TravelerSearch";
 import { getSettings } from "@/lib/settings";
 import { BAG_SIZES, formatEuros, priceForSize } from "@/lib/pricing";
 
@@ -33,24 +34,9 @@ export default async function HomePage() {
           </h1>
           <p className="mt-4 max-w-xl text-lg text-muted">{t("subtitle")}</p>
 
-          <form className="mt-8 flex max-w-xl flex-col gap-2 sm:flex-row" aria-describedby="search-soon">
-            <label htmlFor="q" className="sr-only">{t("searchPlaceholder")}</label>
-            <input
-              id="q"
-              name="q"
-              type="search"
-              placeholder={t("searchPlaceholder")}
-              className="h-12 w-full rounded-xl sm:flex-1 border border-stone-300 bg-white px-4 text-base shadow-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
-            />
-            <button
-              type="button"
-              disabled
-              className="h-12 rounded-xl bg-brand-600 px-5 font-semibold text-white opacity-60"
-            >
-              {t("searchButton")}
-            </button>
-          </form>
-          <p id="search-soon" className="mt-2 text-sm text-muted">{t("searchSoon")}</p>
+          <div className="mt-8">
+            <TravelerSearch />
+          </div>
 
           <div className="mt-8 max-w-xl rounded-2xl border border-stone-200 bg-white p-5 shadow-sm">
             <p className="text-xl font-bold text-brand-700">{t("priceFrom", { price: minPrice })}</p>

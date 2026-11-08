@@ -8,12 +8,9 @@
     "language": "English"
   },
   "Home": {
-    "badge": "Bientôt dans votre ville",
+    "badge": "Consigne à bagages chez les commerçants",
     "title": "Libérez-vous de vos bagages.",
     "subtitle": "Déposez vos sacs chez un commerçant de quartier, près de la gare ou des lieux à visiter. Réservez en 1 minute, profitez de votre journée.",
-    "searchPlaceholder": "Adresse, gare ou lieu touristique",
-    "searchButton": "Trouver une consigne",
-    "searchSoon": "La recherche arrive bientôt.",
     "priceNote": "Annulation gratuite jusqu'à l'heure de dépôt.",
     "howTitle": "Comment ça marche",
     "step1Title": "Réservez en ligne",
@@ -87,7 +84,21 @@
     "price": "Montant invalide (ex. 4,45).",
     "percent": "Pourcentage entre 0 et 100.",
     "tooLong": "Texte trop long.",
-    "checkFields": "Certains champs sont à corriger (voir en rouge ci-dessous)."
+    "checkFields": "Certains champs sont à corriger (voir en rouge ci-dessous).",
+    "terms": "Cochez la case pour continuer.",
+    "booking": {
+      "unavailable": "Cette consigne n'est plus disponible.",
+      "bags": "Ajoutez au moins un bagage.",
+      "past": "Cette heure de dépôt est déjà passée.",
+      "order": "Le retrait doit être après le dépôt.",
+      "tooLong": "30 jours maximum.",
+      "dropoffClosed": "Le commerce est fermé à l'heure de dépôt choisie.",
+      "pickupClosed": "Le commerce est fermé à l'heure de retrait choisie.",
+      "closure": "Le commerce est exceptionnellement fermé à ces dates.",
+      "full": "{remaining, plural, =0 {Complet à ces dates.} one {Complet : il ne reste qu’# place à ces dates.} other {Complet : il ne reste que # places à ces dates.}}",
+      "invalid": "Vérifiez les dates et les heures.",
+      "generic": "Une erreur est survenue. Réessayez dans un instant."
+    }
   },
   "Auth": {
     "loginTitle": "Connexion partenaire",
@@ -205,5 +216,63 @@
   },
   "Common": {
     "loading": "Chargement…"
+  },
+  "Search": {
+    "title": "Toutes nos consignes",
+    "resultsNear": "Consignes près de « {place} »",
+    "placeholder": "Adresse, gare ou lieu touristique",
+    "button": "Trouver une consigne",
+    "aroundMe": "Autour de moi",
+    "locating": "Localisation…",
+    "myPosition": "Ma position",
+    "geoError": "Position indisponible : autorisez la localisation ou tapez une adresse.",
+    "noneNearby": "Pas encore de consigne à moins de 50 km. Voici les plus proches :",
+    "empty": "Aucune consigne disponible pour le moment. Revenez bientôt !",
+    "openNow": "Ouvert",
+    "closedNow": "Fermé",
+    "today": "Aujourd’hui {hours}",
+    "closedToday": "Fermé aujourd'hui",
+    "from": "À partir de {price} / jour",
+    "book": "Réserver"
+  },
+  "Booking": {
+    "title": "Réserver",
+    "backToSearch": "Toutes les consignes",
+    "directions": "Itinéraire",
+    "hours": "Horaires d'ouverture",
+    "dropoff": "Dépôt",
+    "pickup": "Retrait",
+    "date": "Date",
+    "time": "Heure",
+    "closedThatDay": "Fermé ce jour-là",
+    "bags": "Bagages",
+    "total": "Total",
+    "calculating": "Calcul du prix…",
+    "summary": "{bags, plural, one {# bagage} other {# bagages}} · {days, plural, one {# jour} other {# jours}}",
+    "fewLeft": "{count, plural, =0 {Dernières places ce jour-là} one {Plus qu’# place ce jour-là} other {Plus que # places ce jour-là}}",
+    "yourDetails": "Vos coordonnées",
+    "name": "Nom et prénom",
+    "email": "E-mail",
+    "emailHint": "Votre confirmation et votre code QR seront envoyés à cette adresse.",
+    "phone": "Téléphone (facultatif)",
+    "terms": "J'accepte les conditions d'utilisation et je confirme que mes bagages ne contiennent aucun objet interdit.",
+    "forbidden": "Objets interdits : argent liquide, objets de valeur, produits dangereux, denrées périssables, animaux.",
+    "continue": "Continuer · {total}",
+    "continueNoPrice": "Continuer",
+    "booking": "Réservation…",
+    "freeCancel": "Annulation gratuite jusqu'à l'heure de dépôt."
+  },
+  "Reservation": {
+    "reference": "Votre réservation",
+    "pendingPayment": "Réservation gardée 30 minutes, en attente de paiement.",
+    "expired": "Cette réservation a expiré car elle n'a pas été payée à temps. Vous pouvez en refaire une.",
+    "dropoff": "Dépôt",
+    "pickup": "Retrait",
+    "priceDetails": "Détail du prix",
+    "days": "{count, plural, one {# jour} other {# jours}}",
+    "total": "Total",
+    "pay": "Payer {total}",
+    "paySoon": "Le paiement en ligne arrive très bientôt.",
+    "backToLocation": "Retour à la consigne"
   }
 }

@@ -8,12 +8,9 @@
     "language": "Français"
   },
   "Home": {
-    "badge": "Coming soon to your city",
+    "badge": "Luggage storage at local shops",
     "title": "Drop your bags. Enjoy the city.",
     "subtitle": "Leave your bags with a local shop near the station or the sights. Book in 1 minute and make the most of your day.",
-    "searchPlaceholder": "Address, station or landmark",
-    "searchButton": "Find storage",
-    "searchSoon": "Search is coming soon.",
     "priceNote": "Free cancellation until your drop-off time.",
     "howTitle": "How it works",
     "step1Title": "Book online",
@@ -87,7 +84,21 @@
     "price": "Invalid amount (e.g. 4.45).",
     "percent": "Percentage between 0 and 100.",
     "tooLong": "Text too long.",
-    "checkFields": "Some fields need fixing (see in red below)."
+    "checkFields": "Some fields need fixing (see in red below).",
+    "terms": "Please tick the box to continue.",
+    "booking": {
+      "unavailable": "This storage point is no longer available.",
+      "bags": "Add at least one bag.",
+      "past": "This drop-off time has already passed.",
+      "order": "Pick-up must be after drop-off.",
+      "tooLong": "30 days maximum.",
+      "dropoffClosed": "The shop is closed at the chosen drop-off time.",
+      "pickupClosed": "The shop is closed at the chosen pick-up time.",
+      "closure": "The shop is exceptionally closed on these dates.",
+      "full": "{remaining, plural, =0 {Fully booked on these dates.} one {Fully booked: only # spot left on these dates.} other {Fully booked: only # spots left on these dates.}}",
+      "invalid": "Please check the dates and times.",
+      "generic": "Something went wrong. Please try again."
+    }
   },
   "Auth": {
     "loginTitle": "Partner login",
@@ -205,5 +216,63 @@
   },
   "Common": {
     "loading": "Loading…"
+  },
+  "Search": {
+    "title": "All storage points",
+    "resultsNear": "Storage near “{place}”",
+    "placeholder": "Address, station or landmark",
+    "button": "Find storage",
+    "aroundMe": "Near me",
+    "locating": "Locating…",
+    "myPosition": "My location",
+    "geoError": "Location unavailable: allow location access or type an address.",
+    "noneNearby": "No storage within 50 km yet. Here are the closest:",
+    "empty": "No storage available yet. Check back soon!",
+    "openNow": "Open",
+    "closedNow": "Closed",
+    "today": "Today {hours}",
+    "closedToday": "Closed today",
+    "from": "From {price} / day",
+    "book": "Book"
+  },
+  "Booking": {
+    "title": "Book",
+    "backToSearch": "All storage points",
+    "directions": "Directions",
+    "hours": "Opening hours",
+    "dropoff": "Drop-off",
+    "pickup": "Pick-up",
+    "date": "Date",
+    "time": "Time",
+    "closedThatDay": "Closed that day",
+    "bags": "Bags",
+    "total": "Total",
+    "calculating": "Calculating price…",
+    "summary": "{bags, plural, one {# bag} other {# bags}} · {days, plural, one {# day} other {# days}}",
+    "fewLeft": "{count, plural, =0 {Last spots that day} one {Only # spot left that day} other {Only # spots left that day}}",
+    "yourDetails": "Your details",
+    "name": "Full name",
+    "email": "Email",
+    "emailHint": "Your confirmation and QR code will be sent to this address.",
+    "phone": "Phone (optional)",
+    "terms": "I accept the terms of use and confirm my bags contain no prohibited items.",
+    "forbidden": "Prohibited items: cash, valuables, hazardous goods, perishable food, animals.",
+    "continue": "Continue · {total}",
+    "continueNoPrice": "Continue",
+    "booking": "Booking…",
+    "freeCancel": "Free cancellation until your drop-off time."
+  },
+  "Reservation": {
+    "reference": "Your booking",
+    "pendingPayment": "Booking held for 30 minutes, awaiting payment.",
+    "expired": "This booking expired because it wasn't paid in time. You can make a new one.",
+    "dropoff": "Drop-off",
+    "pickup": "Pick-up",
+    "priceDetails": "Price details",
+    "days": "{count, plural, one {# day} other {# days}}",
+    "total": "Total",
+    "pay": "Pay {total}",
+    "paySoon": "Online payment is coming very soon.",
+    "backToLocation": "Back to storage point"
   }
 }

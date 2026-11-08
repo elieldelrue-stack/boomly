@@ -1,11 +1,13 @@
 "use server";
 
+import { updateTag } from "next/cache";
 import { z } from "zod";
 import { redirect } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { safeLocale } from "@/lib/locale";
 import { isValidSiret, normalizeSiret } from "@/lib/siret";
 import { validateHours } from "@/lib/hours";
+import { LOCATIONS_TAG } from "@/lib/public-locations";
 import { BUSINESS_TYPES, type FormState, type OpeningSlot } from "@/lib/types";
 
 const optionalText = (max: number) =>
@@ -98,6 +100,7 @@ export async function saveLocationAction(_prev: FormState, formData: FormData): 
     return { error: "generic" };
   }
 
+  updateTag(LOCATIONS_TAG); // la carte publique reflète aussitôt les changements
   redirect({ href: "/partenaire?saved=1", locale });
   return {};
 }

@@ -5,6 +5,7 @@ import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { getCurrentProfile } from "@/lib/auth";
 import { SETTINGS_TAG } from "@/lib/settings";
+import { LOCATIONS_TAG } from "@/lib/public-locations";
 import type { FormState } from "@/lib/types";
 
 async function assertAdmin(): Promise<FormState | null> {
@@ -15,7 +16,7 @@ async function assertAdmin(): Promise<FormState | null> {
 }
 
 const statusSchema = z.object({
-  id: z.uuid(),
+  id: z.guid(),
   status: z.enum(["active", "refused", "suspended"]),
   reason: z
     .string()
@@ -41,6 +42,7 @@ export async function setLocationStatusAction(_prev: FormState, formData: FormDa
     console.error("Changement de statut :", error.message);
     return { error: "generic" };
   }
+  updateTag(LOCATIONS_TAG); // apparaît ou disparaît aussitôt de la carte
   return { ok: true };
 }
 
