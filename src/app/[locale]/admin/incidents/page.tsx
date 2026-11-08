@@ -29,7 +29,7 @@ async function Incidents() {
         const booking = i.booking as unknown as { reference: string; customer_name: string; location: { name: string } | null } | null;
         return (
           <li key={i.id}>
-            <Link href={`/admin/incidents/${i.id}`} className="block rounded-2xl border border-stone-200 p-4 hover:border-brand-500">
+            <Link href={`/admin/incidents/${i.id}`} className="block rounded-3xl bg-white p-5 shadow-soft lift">
               <div className="flex flex-wrap items-center gap-2">
                 <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${STATUS_STYLE[i.status]}`}>{t(`istatus_${i.status}`)}</span>
                 <span className="font-semibold">{t(`type_${i.type}`)}</span>

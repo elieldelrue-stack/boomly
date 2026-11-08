@@ -27,18 +27,18 @@ async function Bookings({ searchParams }: { searchParams: Promise<Record<string,
     <div className="flex flex-col gap-4">
       <form className="flex gap-2" role="search">
         <input name="q" defaultValue={q} placeholder={t("searchPlaceholder")} className={`${inputClass} max-w-md`} />
-        <button type="submit" className="h-11 rounded-xl bg-brand-600 px-4 font-semibold text-white">
+        <button type="submit" className="h-12 rounded-full bg-brand-500 px-5 font-semibold text-white">
           {t("search")}
         </button>
       </form>
       {rows.length === 0 ? (
         <p className="text-muted">{t("noBookings")}</p>
       ) : (
-        <div className="overflow-x-auto rounded-2xl border border-stone-200">
+        <div className="overflow-x-auto rounded-3xl bg-white shadow-soft">
           <table className="w-full min-w-[720px] text-left text-sm">
-            <tbody className="divide-y divide-stone-100">
+            <tbody className="divide-y divide-ink/5">
               {rows.map((b) => (
-                <tr key={b.id} className="hover:bg-stone-50">
+                <tr key={b.id} className="hover:bg-cream-100">
                   <td className="px-4 py-3 font-mono font-semibold">
                     <Link href={`/admin/reservations/${b.reference}`} className="text-brand-700 hover:underline">
                       {b.reference}

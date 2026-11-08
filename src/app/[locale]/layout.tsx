@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Bricolage_Grotesque, DM_Sans } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { locale as rootLocale } from "next/root-params";
@@ -11,7 +11,8 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import "../globals.css";
 
-const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
+const display = Bricolage_Grotesque({ variable: "--font-bricolage", subsets: ["latin"], weight: ["600", "700", "800"] });
+const body = DM_Sans({ variable: "--font-dmsans", subsets: ["latin"] });
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -27,7 +28,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export const viewport: Viewport = {
-  themeColor: "#ea580c",
+  themeColor: "#ff5f1a",
 };
 
 export default async function LocaleLayout({ children }: LayoutProps<"/[locale]">) {
@@ -35,7 +36,7 @@ export default async function LocaleLayout({ children }: LayoutProps<"/[locale]"
   if (!hasLocale(routing.locales, locale)) notFound();
 
   return (
-    <html lang={locale} className={`${inter.variable} h-full antialiased`}>
+    <html lang={locale} className={`${display.variable} ${body.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col font-sans">
         <NextIntlClientProvider>
           <Header />

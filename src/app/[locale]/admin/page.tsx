@@ -56,7 +56,7 @@ async function Dashboard() {
                   <th className="py-2 font-medium">{t("boomly")}</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-stone-100">
+              <tbody className="divide-y divide-ink/5">
                 {stats.months.map((m) => (
                   <tr key={m.month}>
                     <td className="py-2 text-left first-letter:uppercase">{monthLabel(m.month)}</td>

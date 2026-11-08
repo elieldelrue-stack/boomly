@@ -93,7 +93,7 @@ async function Detail({ params }: { params: Promise<{ reference: string }> }) {
             <h3 className="mb-2 font-semibold">{t("timeline")}</h3>
             <ul className="text-sm">
               {timeline.filter(([, d]) => d).map(([label, d]) => (
-                <li key={label} className="flex justify-between gap-3 border-b border-stone-100 py-1.5 last:border-0">
+                <li key={label} className="flex justify-between gap-3 border-b border-ink/5 py-1.5 last:border-0">
                   <span>{label}</span>
                   <span className="text-muted">{when(d)}</span>
                 </li>

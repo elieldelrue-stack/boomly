@@ -57,7 +57,7 @@ export function SettingsForm({ settings }: { settings: Settings }) {
         />
       </Field>
 
-      <div className="rounded-xl bg-stone-50 p-4 text-sm">
+      <div className="rounded-xl bg-cream-100 p-4 text-sm">
         <p className="font-medium">{t("example")}</p>
         <ul className="mt-2 flex flex-col gap-1 text-muted">
           {BAG_SIZES.map((size) => {

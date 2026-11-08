@@ -139,7 +139,7 @@ async function Detail({ params }: { params: Promise<{ id: string }> }) {
               {[1, 2, 3, 4, 5, 6, 7].map((d) => {
                 const slots = hours.filter((h) => h.weekday === d);
                 return (
-                  <li key={d} className="flex justify-between gap-4 border-b border-stone-100 py-1">
+                  <li key={d} className="flex justify-between gap-4 border-b border-ink/5 py-1">
                     <span>{tDays(String(d))}</span>
                     <span className="text-muted">
                       {slots.length ? slots.map((s) => `${s.opens_at}–${s.closes_at}`).join(", ") : tf("closed")}
@@ -157,7 +157,7 @@ async function Detail({ params }: { params: Promise<{ id: string }> }) {
             ) : (
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                 {location.photos.map((url) => (
-                  <a key={url} href={url} target="_blank" rel="noreferrer" className="block aspect-[4/3] overflow-hidden rounded-xl bg-stone-100">
+                  <a key={url} href={url} target="_blank" rel="noreferrer" className="block aspect-[4/3] overflow-hidden rounded-xl bg-cream-200">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={url} alt="" className="h-full w-full object-cover" />
                   </a>
@@ -187,7 +187,7 @@ async function Detail({ params }: { params: Promise<{ id: string }> }) {
               <h3 className="mb-3 font-semibold">{ta("reviews")}</h3>
               <ul className="flex flex-col gap-3 text-sm">
                 {stats.reviews.map((r) => (
-                  <li key={r.id} className="flex items-start justify-between gap-3 border-b border-stone-100 pb-2 last:border-0">
+                  <li key={r.id} className="flex items-start justify-between gap-3 border-b border-ink/5 pb-2 last:border-0">
                     <div>
                       <p className="text-amber-500">{"★".repeat(r.rating)}<span className="ml-2 text-muted">{r.customer_first_name}</span></p>
                       {r.comment && <p>{r.comment}</p>}

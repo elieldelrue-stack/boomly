@@ -82,7 +82,7 @@ async function Reservation({ params }: { params: Promise<{ reference: string }> 
         )}
         <ul className="mt-3 flex flex-wrap gap-2">
           {sizes.map(([size, n]) => (
-            <li key={size} className="rounded-full bg-stone-100 px-3 py-1 text-sm font-medium">
+            <li key={size} className="rounded-full bg-cream-200 px-3 py-1 text-sm font-medium">
               {n} × {ts(size)}
             </li>
           ))}
@@ -108,7 +108,7 @@ async function Reservation({ params }: { params: Promise<{ reference: string }> 
           <p className="text-sm text-muted">{t("labelsHint")}</p>
           <ul className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
             {labels.map((l) => (
-              <li key={l} className="rounded-lg border-2 border-dashed border-stone-300 px-3 py-2 text-center font-mono font-bold">
+              <li key={l} className="rounded-lg border-2 border-dashed border-ink/20 px-3 py-2 text-center font-mono font-bold">
                 {l}
               </li>
             ))}

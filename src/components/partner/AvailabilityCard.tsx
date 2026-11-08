@@ -45,7 +45,7 @@ export function AvailabilityCard({ closures, pausedNow }: { closures: Closure[];
       )}
 
       {closures.length > 0 && (
-        <ul className="mt-4 divide-y divide-stone-100 text-sm">
+        <ul className="mt-4 divide-y divide-ink/5 text-sm">
           {closures.map((c) => (
             <li key={c.id} className="flex items-center justify-between gap-3 py-2">
               <span>
@@ -69,7 +69,7 @@ export function AvailabilityCard({ closures, pausedNow }: { closures: Closure[];
         </ul>
       )}
 
-      <form onSubmit={addClosure} className="mt-4 grid grid-cols-2 gap-3 border-t border-stone-100 pt-4">
+      <form onSubmit={addClosure} className="mt-4 grid grid-cols-2 gap-3 border-t border-ink/5 pt-4">
         <p className="col-span-2 font-medium">{t("closureTitle")}</p>
         <Field label={t("from")} htmlFor="start">
           <Input id="start" name="start" type="date" required />

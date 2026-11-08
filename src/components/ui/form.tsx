@@ -1,7 +1,7 @@
 import type { ComponentProps, ReactNode } from "react";
 
 export const inputClass =
-  "block h-11 w-full rounded-xl border border-stone-300 bg-white px-3 text-base shadow-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 aria-[invalid=true]:border-red-500";
+  "block h-12 w-full rounded-2xl border-0 bg-white px-4 text-base text-ink ring-1 ring-ink/10 outline-none transition placeholder:text-ink/40 focus:ring-2 focus:ring-brand-400 aria-[invalid=true]:ring-2 aria-[invalid=true]:ring-red-500";
 
 export function Field({
   label,
@@ -18,7 +18,7 @@ export function Field({
 }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label htmlFor={htmlFor} className="text-sm font-medium">
+      <label htmlFor={htmlFor} className="text-sm font-semibold text-ink/80">
         {label}
       </label>
       {children}
@@ -42,35 +42,35 @@ export function Button({
   ...props
 }: ComponentProps<"button"> & { variant?: "primary" | "secondary" | "danger" }) {
   const styles = {
-    primary: "bg-brand-600 text-white hover:bg-brand-700",
-    secondary: "border border-stone-300 bg-white hover:bg-stone-50",
+    primary: "bg-brand-500 text-white shadow-[0_8px_20px_-8px_rgb(255_95_26/0.7)] hover:bg-brand-600",
+    secondary: "bg-white text-ink ring-1 ring-ink/12 hover:ring-ink/25",
     danger: "bg-red-600 text-white hover:bg-red-700",
   }[variant];
   return (
     <button
       {...props}
-      className={`inline-flex h-11 items-center justify-center rounded-xl px-5 font-semibold transition disabled:cursor-not-allowed disabled:opacity-60 ${styles} ${className}`}
+      className={`inline-flex h-12 items-center justify-center rounded-full px-6 font-semibold transition hover:-translate-y-0.5 active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none disabled:hover:translate-y-0 ${styles} ${className}`}
     />
   );
 }
 
 export function Alert({ kind = "error", children }: { kind?: "error" | "success" | "info"; children: ReactNode }) {
   const styles = {
-    error: "border-red-200 bg-red-50 text-red-800",
-    success: "border-green-200 bg-green-50 text-green-800",
-    info: "border-brand-100 bg-brand-50 text-brand-700",
+    error: "bg-red-50 text-red-800 ring-1 ring-red-200",
+    success: "bg-forest-50 text-forest-800 ring-1 ring-forest-100",
+    info: "bg-brand-50 text-brand-800 ring-1 ring-brand-100",
   }[kind];
   return (
-    <div role={kind === "error" ? "alert" : "status"} className={`rounded-xl border px-4 py-3 text-sm ${styles}`}>
+    <div role={kind === "error" ? "alert" : "status"} className={`rounded-2xl px-4 py-3 text-sm ${styles}`}>
       {children}
     </div>
   );
 }
 
 export function Card({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return <div className={`rounded-2xl border border-stone-200 bg-white p-5 sm:p-6 ${className}`}>{children}</div>;
+  return <div className={`rounded-[28px] bg-white p-5 shadow-soft sm:p-7 ${className}`}>{children}</div>;
 }
 
 export function PageShell({ children, wide = false }: { children: ReactNode; wide?: boolean }) {
-  return <div className={`mx-auto w-full px-4 py-10 ${wide ? "max-w-6xl" : "max-w-2xl"}`}>{children}</div>;
+  return <div className={`mx-auto w-full px-4 py-8 sm:py-12 ${wide ? "max-w-6xl" : "max-w-2xl"}`}>{children}</div>;
 }

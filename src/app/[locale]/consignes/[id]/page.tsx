@@ -90,7 +90,7 @@ async function Detail({ params }: { params: Promise<{ id: string }> }) {
                 return (
                   <li
                     key={d}
-                    className={`flex justify-between gap-4 border-b border-stone-100 py-1.5 last:border-0 ${d === now.weekday ? "font-semibold" : ""}`}
+                    className={`flex justify-between gap-4 border-b border-ink/5 py-1.5 last:border-0 ${d === now.weekday ? "font-semibold" : ""}`}
                   >
                     <span>{tDays(String(d))}</span>
                     <span className={slots.length ? "" : "text-muted"}>
@@ -107,7 +107,7 @@ async function Detail({ params }: { params: Promise<{ id: string }> }) {
               <h2 id="avis" className="mb-3 font-semibold">{t("reviewsTitle")}</h2>
               <ul className="flex flex-col gap-3">
                 {reviews.map((r, i) => (
-                  <li key={i} className="border-b border-stone-100 pb-3 last:border-0">
+                  <li key={i} className="border-b border-ink/5 pb-3 last:border-0">
                     <p className="text-amber-500" aria-label={`${r.rating}/5`}>
                       {"★".repeat(r.rating)}
                       <span className="text-stone-300">{"★".repeat(5 - r.rating)}</span>
@@ -120,7 +120,7 @@ async function Detail({ params }: { params: Promise<{ id: string }> }) {
             </Card>
           )}
 
-          <div className="h-64 overflow-hidden rounded-2xl border border-stone-200">
+          <div className="h-64 overflow-hidden rounded-3xl bg-white shadow-soft">
             <LocationsMap
               points={[
                 {

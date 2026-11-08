@@ -60,7 +60,7 @@ export function TravelerSearch({ initialQuery = "", compact = false }: { initial
     <div className={compact ? "w-full" : "max-w-xl"}>
       <form
         role="search"
-        className="flex flex-col gap-2 sm:flex-row"
+        className="flex flex-col gap-2 rounded-[26px] bg-white p-2 shadow-lift sm:flex-row sm:rounded-full"
         onSubmit={(e) => {
           e.preventDefault();
           if (suggestions[0]) go(suggestions[0]);
@@ -85,15 +85,15 @@ export function TravelerSearch({ initialQuery = "", compact = false }: { initial
               }
             }}
             onFocus={() => suggestions.length && setOpen(true)}
-            className="h-12 w-full rounded-xl border border-stone-300 bg-white px-4 text-base shadow-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
+            className="h-12 w-full rounded-full bg-transparent px-4 text-base outline-none placeholder:text-ink/45 focus:bg-cream-50"
           />
           {open && suggestions.length > 0 && (
-            <ul className="absolute z-[1000] mt-1 w-full overflow-hidden rounded-xl border border-stone-200 bg-white text-left shadow-lg">
+            <ul className="absolute z-[1000] mt-3 w-full overflow-hidden rounded-2xl bg-white text-left shadow-lift ring-1 ring-ink/5">
               {suggestions.map((s) => (
                 <li key={s.label}>
                   <button
                     type="button"
-                    className="w-full px-4 py-2.5 text-left text-sm hover:bg-brand-50"
+                    className="w-full px-4 py-3 text-left text-[15px] hover:bg-brand-50"
                     onClick={() => go(s)}
                   >
                     {s.label}
@@ -103,13 +103,16 @@ export function TravelerSearch({ initialQuery = "", compact = false }: { initial
             </ul>
           )}
         </div>
-        <button type="submit" className="h-12 rounded-xl bg-brand-600 px-5 font-semibold text-white hover:bg-brand-700">
+        <button type="submit" className="h-12 shrink-0 rounded-full bg-brand-500 px-6 font-semibold text-white transition hover:bg-brand-600">
           {t("button")}
         </button>
       </form>
-      <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
-        <button type="button" onClick={aroundMe} className="font-medium text-brand-700 hover:underline" disabled={locating}>
-          📍 {locating ? t("locating") : t("aroundMe")}
+      <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
+        <button type="button" onClick={aroundMe} className="inline-flex items-center gap-1.5 font-semibold text-forest-700 hover:underline" disabled={locating}>
+          <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
+            <circle cx="12" cy="12" r="3" /><path d="M12 2v3M12 19v3M2 12h3M19 12h3" /><circle cx="12" cy="12" r="7" />
+          </svg>
+          {locating ? t("locating") : t("aroundMe")}
         </button>
         {geoError && <span className="text-red-600">{t("geoError")}</span>}
       </div>

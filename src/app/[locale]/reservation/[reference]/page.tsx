@@ -141,7 +141,7 @@ async function Reservation({
             </li>
           ))}
         </ul>
-        <div className="mt-3 flex justify-between border-t border-stone-200 pt-3 text-lg font-bold">
+        <div className="mt-3 flex justify-between border-t border-ink/10 pt-3 text-lg font-bold">
           <span>{t("total")}</span>
           <span>{formatEuros(booking.total_cents, locale)}</span>
         </div>

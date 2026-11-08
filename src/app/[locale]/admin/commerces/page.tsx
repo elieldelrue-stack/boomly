@@ -43,9 +43,9 @@ async function LocationsList() {
             <h2 className="mb-3 text-lg font-semibold">
               {tStatus(status)} <span className="text-muted">({group.length})</span>
             </h2>
-            <div className="overflow-x-auto rounded-2xl border border-stone-200">
+            <div className="overflow-x-auto rounded-3xl bg-white shadow-soft">
               <table className="w-full min-w-[560px] text-left text-sm">
-                <thead className="bg-stone-50 text-muted">
+                <thead className="bg-cream-100 text-muted">
                   <tr>
                     <th className="px-4 py-2 font-medium">{t("colName")}</th>
                     <th className="px-4 py-2 font-medium">{t("colCity")}</th>
@@ -55,7 +55,7 @@ async function LocationsList() {
                     <th className="px-4 py-2" />
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-stone-100">
+                <tbody className="divide-y divide-ink/5">
                   {group.map((l) => (
                     <tr key={l.id}>
                       <td className="px-4 py-3 font-medium">{l.name}</td>

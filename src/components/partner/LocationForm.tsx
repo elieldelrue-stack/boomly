@@ -219,7 +219,7 @@ export function LocationForm({
               aria-invalid={!!(fe.address || fe.latitude)}
             />
             {!address && (suggestions.length > 0 || searching || searched) && (
-              <ul className="absolute z-10 mt-1 w-full overflow-hidden rounded-xl border border-stone-200 bg-white shadow-lg">
+              <ul className="absolute z-10 mt-1 w-full overflow-hidden rounded-2xl bg-white ring-1 ring-ink/10 shadow-lg">
                 {searching && <li className="px-3 py-2 text-sm text-muted">{t("addressSearching")}</li>}
                 {!searching && searched && suggestions.length === 0 && (
                   <li className="px-3 py-2 text-sm text-muted">{t("addressNone")}</li>
@@ -279,7 +279,7 @@ export function LocationForm({
           </div>
         )}
         <input type="hidden" name="hours" value={JSON.stringify(toSlots(days))} />
-        <ul className="flex flex-col divide-y divide-stone-100">
+        <ul className="flex flex-col divide-y divide-ink/5">
           {days.map((day, i) => (
             <li key={i} className="flex flex-col gap-2 py-3 sm:flex-row sm:items-start">
               <label className="flex w-36 shrink-0 items-center gap-2 pt-2.5 font-medium">
@@ -368,7 +368,7 @@ export function LocationForm({
         )}
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
           {photos.map((url) => (
-            <div key={url} className="relative aspect-[4/3] overflow-hidden rounded-xl bg-stone-100">
+            <div key={url} className="relative aspect-[4/3] overflow-hidden rounded-xl bg-cream-200">
               <input type="hidden" name="photos" value={url} />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={url} alt="" className="h-full w-full object-cover" />
@@ -383,7 +383,7 @@ export function LocationForm({
             </div>
           ))}
           {photos.length < 6 && (
-            <label className="grid aspect-[4/3] cursor-pointer place-items-center rounded-xl border-2 border-dashed border-stone-300 text-center text-sm font-medium text-muted hover:border-brand-500 hover:text-brand-700">
+            <label className="grid aspect-[4/3] cursor-pointer place-items-center rounded-xl border-2 border-dashed border-ink/20 text-center text-sm font-medium text-muted hover:border-brand-500 hover:text-brand-700">
               <span>{uploading ? t("uploading") : `+ ${t("addPhotos")}`}</span>
               <input
                 ref={fileInput}

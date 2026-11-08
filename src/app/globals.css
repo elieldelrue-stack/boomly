@@ -1,17 +1,119 @@
 @import "tailwindcss";
 
+/* ===== Système visuel Boomly ===== */
 @theme {
-  --color-brand-50: #fff7ed;
-  --color-brand-100: #ffedd5;
-  --color-brand-500: #f97316;
-  --color-brand-600: #ea580c;
-  --color-brand-700: #c2410c;
-  --color-ink: #1c1917;
-  --color-muted: #57534e;
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  /* Orange de marque (aplats, formes, boutons) */
+  --color-brand-50: #fff3ea;
+  --color-brand-100: #ffe2cc;
+  --color-brand-200: #ffc49c;
+  --color-brand-300: #ff9f63;
+  --color-brand-400: #ff7a35;
+  --color-brand-500: #ff5f1a;
+  --color-brand-600: #ec4b0a;
+  --color-brand-700: #c23a06;
+  --color-brand-800: #8f2b06;
+
+  /* Accent : vert sapin */
+  --color-forest-50: #edf5f0;
+  --color-forest-100: #d5e8dd;
+  --color-forest-300: #7fb79a;
+  --color-forest-500: #2e7a57;
+  --color-forest-700: #145a41;
+  --color-forest-800: #0e4532;
+  --color-forest-900: #0a3125;
+
+  /* Fonds crème */
+  --color-cream-50: #fffcf7;
+  --color-cream-100: #fbf6ee;
+  --color-cream-200: #f4eadb;
+  --color-cream-300: #eadbc4;
+
+  --color-ink: #17130f;
+  --color-muted: #5f574e;
+
+  --font-sans: var(--font-dmsans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-soft: 0 1px 2px rgb(23 19 15 / 0.04), 0 8px 24px -12px rgb(23 19 15 / 0.12);
+  --shadow-lift: 0 2px 4px rgb(23 19 15 / 0.06), 0 18px 40px -16px rgb(23 19 15 / 0.22);
+
+  --animate-blob: blob 18s ease-in-out infinite;
+  --animate-marquee: marquee 45s linear infinite;
+  --animate-float: float 7s ease-in-out infinite;
+
+  @keyframes blob {
+    0%, 100% { border-radius: 58% 42% 46% 54% / 52% 44% 56% 48%; transform: rotate(0deg) scale(1); }
+    33% { border-radius: 44% 56% 60% 40% / 46% 58% 42% 54%; transform: rotate(6deg) scale(1.03); }
+    66% { border-radius: 52% 48% 38% 62% / 60% 42% 58% 40%; transform: rotate(-4deg) scale(0.98); }
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
 }
 
-body {
-  background: #ffffff;
-  color: var(--color-ink);
+@layer base {
+  body {
+    background: var(--color-cream-100);
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+    letter-spacing: -0.03em;
+  }
+  ::selection {
+    background: var(--color-brand-200);
+  }
+}
+
+/* Apparition douce au scroll (voir <Reveal>) */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Léger soulèvement au survol */
+.lift {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+@media (hover: hover) {
+  .lift:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lift);
+  }
+}
+
+/* Accordéon FAQ */
+details > summary {
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+details[open] .faq-icon {
+  transform: rotate(45deg);
+}
+
+/* Respect des préférences d'accessibilité : pas de mouvement */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
 }

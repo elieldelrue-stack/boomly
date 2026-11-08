@@ -70,10 +70,10 @@ async function Results({ searchParams }: { searchParams: Promise<Record<string, 
       )}
 
       {all.length === 0 ? (
-        <p className="mt-6 rounded-2xl border border-stone-200 p-6 text-muted">{t("empty")}</p>
+        <p className="mt-6 rounded-3xl bg-white shadow-soft p-6 text-muted">{t("empty")}</p>
       ) : (
         <div className="mt-4 flex flex-col gap-4 lg:grid lg:grid-cols-[1fr_1fr] lg:items-start">
-          <div className="h-64 overflow-hidden rounded-2xl border border-stone-200 sm:h-80 lg:sticky lg:top-4 lg:order-2 lg:h-[calc(100vh-8rem)]">
+          <div className="h-64 overflow-hidden rounded-3xl bg-white shadow-soft sm:h-80 lg:sticky lg:top-4 lg:order-2 lg:h-[calc(100vh-8rem)]">
             <LocationsMap
               points={points}
               center={hasCenter ? [lat, lng] : undefined}
@@ -85,9 +85,9 @@ async function Results({ searchParams }: { searchParams: Promise<Record<string, 
               <li key={l.id}>
                 <Link
                   href={`/consignes/${l.id}`}
-                  className="flex gap-4 rounded-2xl border border-stone-200 bg-white p-3 transition hover:border-brand-500 hover:shadow-sm"
+                  className="flex gap-4 rounded-3xl bg-white p-3 shadow-soft lift"
                 >
-                  <div className="h-24 w-24 shrink-0 overflow-hidden rounded-xl bg-stone-100 sm:h-28 sm:w-32">
+                  <div className="h-24 w-24 shrink-0 overflow-hidden rounded-xl bg-cream-200 sm:h-28 sm:w-32">
                     {l.photos[0] && (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img src={l.photos[0]} alt="" className="h-full w-full object-cover" loading="lazy" />

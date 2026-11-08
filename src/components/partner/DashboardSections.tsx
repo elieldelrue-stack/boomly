@@ -24,10 +24,10 @@ export async function TodayBookings({ locationId }: { locationId: string }) {
       {bookings.length === 0 ? (
         <p className="mt-3 text-muted">{t("todayEmpty")}</p>
       ) : (
-        <ul className="mt-3 divide-y divide-stone-100">
+        <ul className="mt-3 divide-y divide-ink/5">
           {bookings.map((b) => (
             <li key={b.id}>
-              <Link href={`/partenaire/reservations/${b.reference}`} className="flex items-center justify-between gap-3 py-3 hover:bg-stone-50">
+              <Link href={`/partenaire/reservations/${b.reference}`} className="flex items-center justify-between gap-3 py-3 hover:bg-cream-100">
                 <div className="min-w-0">
                   <p className="truncate font-semibold">
                     {b.customer_name} · {t("bags", { count: b.bag_count })}
@@ -62,7 +62,7 @@ export async function EarningsCard({ locationId }: { locationId: string }) {
       {months.length === 0 ? (
         <p className="mt-3 text-muted">{t("earningsEmpty")}</p>
       ) : (
-        <ul className="mt-3 divide-y divide-stone-100">
+        <ul className="mt-3 divide-y divide-ink/5">
           {months.map((m) => (
             <li key={m.month} className="flex justify-between gap-3 py-2">
               <span className="first-letter:uppercase">

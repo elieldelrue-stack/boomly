@@ -45,7 +45,7 @@ function Stepper({
         <button
           type="button"
           aria-label={`${label} −`}
-          className="grid h-9 w-9 place-items-center rounded-full border border-stone-300 text-lg disabled:opacity-40"
+          className="grid h-9 w-9 place-items-center rounded-full bg-white ring-1 ring-ink/15 text-lg disabled:opacity-40"
           disabled={value === 0}
           onClick={() => onChange(value - 1)}
         >
@@ -57,7 +57,7 @@ function Stepper({
         <button
           type="button"
           aria-label={`${label} +`}
-          className="grid h-9 w-9 place-items-center rounded-full border border-stone-300 text-lg disabled:opacity-40"
+          className="grid h-9 w-9 place-items-center rounded-full bg-white ring-1 ring-ink/15 text-lg disabled:opacity-40"
           disabled={value >= 20}
           onClick={() => onChange(value + 1)}
         >
@@ -225,7 +225,7 @@ export function BookingForm({
 
       <fieldset>
         <legend className="mb-1 font-semibold">{t("bags")}</legend>
-        <div className="divide-y divide-stone-100">
+        <div className="divide-y divide-ink/5">
           {BAG_SIZES.map((s) => (
             <Stepper
               key={s}
@@ -239,7 +239,7 @@ export function BookingForm({
         </div>
       </fieldset>
 
-      <div className="rounded-2xl bg-stone-50 p-4" aria-live="polite">
+      <div className="rounded-2xl bg-cream-100 p-4" aria-live="polite">
         {quoteError ? (
           <p className="text-sm text-red-700">
             {te(`booking.${quoteError}`, { remaining: quote && !quote.ok ? (quote.remaining ?? 0) : 0 })}

@@ -77,7 +77,7 @@ async function Dashboard({ searchParams }: { searchParams: Promise<Record<string
           <p className="mt-2 text-muted">{t("noLocationText")}</p>
           <Link
             href="/partenaire/commerce"
-            className="mt-4 inline-flex h-11 items-center rounded-xl bg-brand-600 px-5 font-semibold text-white hover:bg-brand-700"
+            className="mt-4 inline-flex h-12 items-center rounded-full bg-brand-500 px-6 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-brand-600"
           >
             {t("noLocationCta")}
           </Link>
@@ -98,7 +98,7 @@ async function Dashboard({ searchParams }: { searchParams: Promise<Record<string
           )}
           <Link
             href="/partenaire/commerce"
-            className="mt-5 inline-flex h-11 items-center rounded-xl border border-stone-300 px-5 font-semibold hover:bg-stone-50"
+            className="mt-5 inline-flex h-12 items-center rounded-full bg-white px-6 font-semibold ring-1 ring-ink/12 transition hover:-translate-y-0.5 hover:ring-ink/25"
           >
             {t("edit")}
           </Link>
