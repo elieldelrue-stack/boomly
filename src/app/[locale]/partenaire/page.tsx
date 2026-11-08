@@ -6,6 +6,8 @@ import { getMyLocation } from "@/lib/partner-data";
 import { signOutAction } from "@/lib/actions/auth";
 import { Alert, Card, PageShell } from "@/components/ui/form";
 import { StatusBadge } from "@/components/ui/StatusBadge";
+import { StripeCard } from "@/components/partner/StripeCard";
+import { syncStripeStatus } from "@/lib/stripe-connect";
 
 export default async function PartnerHomePage({ searchParams }: PageProps<"/[locale]/partenaire">) {
   const t = await getTranslations("Common");
@@ -26,7 +28,20 @@ async function Dashboard({ searchParams }: { searchParams: Promise<Record<string
   const t = await getTranslations("Partner");
   const ta = await getTranslations("Auth");
   const { location } = await getMyLocation(profile.id);
-  const { saved } = await searchParams;
+  const { saved, stripe: stripeReturn } = await searchParams;
+
+  // Au retour du formulaire Stripe (ou tant que ce n'est pas terminé), on relit l'état du compte.
+  let stripeStatus = {
+    detailsSubmitted: location?.stripe_details_submitted ?? false,
+    payoutsEnabled: location?.stripe_payouts_enabled ?? false,
+  };
+  if (location?.stripe_account_id && !stripeStatus.payoutsEnabled) {
+    try {
+      stripeStatus = await syncStripeStatus(location.id, location.stripe_account_id);
+    } catch (e) {
+      console.error("Lecture du compte Stripe :", (e as Error).message);
+    }
+  }
 
   return (
     <div className="flex flex-col gap-6">
@@ -51,6 +66,7 @@ async function Dashboard({ searchParams }: { searchParams: Promise<Record<string
       </div>
 
       {saved && <Alert kind="success">{t("saved")}</Alert>}
+      {stripeReturn === "return" && stripeStatus.payoutsEnabled && <Alert kind="success">{t("paymentsReady")}</Alert>}
 
       {!location ? (
         <Card className="border-brand-100 bg-brand-50">
@@ -84,6 +100,14 @@ async function Dashboard({ searchParams }: { searchParams: Promise<Record<string
             {t("edit")}
           </Link>
         </Card>
+      )}
+
+      {location && (
+        <StripeCard
+          hasAccount={!!location.stripe_account_id}
+          detailsSubmitted={stripeStatus.detailsSubmitted}
+          payoutsEnabled={stripeStatus.payoutsEnabled}
+        />
       )}
 
       <p className="text-sm text-muted">{t("comingSoon")}</p>

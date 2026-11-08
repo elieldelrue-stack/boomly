@@ -98,6 +98,12 @@
       "full": "{remaining, plural, =0 {Complet à ces dates.} one {Complet : il ne reste qu’# place à ces dates.} other {Complet : il ne reste que # places à ces dates.}}",
       "invalid": "Vérifiez les dates et les heures.",
       "generic": "Une erreur est survenue. Réessayez dans un instant."
+    },
+    "stripeNotReady": "Le commerçant doit d’abord terminer la configuration de ses paiements Stripe.",
+    "checkout": {
+      "notPending": "Cette réservation n’est plus en attente de paiement.",
+      "expired": "Le délai de paiement est dépassé. Refaites une réservation.",
+      "stripe": "Le service de paiement ne répond pas. Réessayez dans un instant."
     }
   },
   "Auth": {
@@ -119,7 +125,15 @@
     "checkEmailTitle": "Vérifiez votre boîte mail",
     "checkEmailText": "Nous vous avons envoyé un lien de confirmation. Cliquez dessus pour continuer l'inscription de votre commerce.",
     "logout": "Se déconnecter",
-    "callbackError": "Le lien est invalide ou a expiré. Connectez-vous ou recommencez l'inscription."
+    "callbackError": "Le lien est invalide ou a expiré. Connectez-vous ou recommencez l'inscription.",
+    "forgotLink": "Mot de passe oublié ?",
+    "forgotTitle": "Mot de passe oublié",
+    "forgotText": "Indiquez votre e-mail : nous vous enverrons un lien pour choisir un nouveau mot de passe.",
+    "forgotSubmit": "Envoyer le lien",
+    "forgotSent": "Si un compte existe avec cet e-mail, un lien vient de vous être envoyé. Pensez à vérifier vos courriers indésirables.",
+    "newPasswordTitle": "Nouveau mot de passe",
+    "newPassword": "Nouveau mot de passe",
+    "newPasswordSubmit": "Enregistrer"
   },
   "Partner": {
     "title": "Mon espace partenaire",
@@ -137,7 +151,16 @@
     "capacity": "{count} bagages maximum par jour",
     "saved": "Modifications enregistrées.",
     "adminLink": "Espace admin",
-    "comingSoon": "Bientôt ici : réservations du jour, scanner de code QR, revenus et paiements Stripe."
+    "comingSoon": "Bientôt ici : réservations du jour, scanner de code QR, revenus et paiements Stripe.",
+    "paymentsTitle": "Paiements",
+    "paymentsTodo": "Pour recevoir vos gains, créez votre compte de paiement sécurisé Stripe : identité et IBAN. Obligatoire avant la mise en ligne.",
+    "paymentsPending": "Stripe vérifie vos informations. Cela prend généralement quelques minutes, parfois plus si des documents manquent.",
+    "paymentsStart": "Configurer mes paiements",
+    "paymentsContinue": "Compléter mes informations Stripe",
+    "paymentsHint": "Vous serez redirigé vers Stripe, notre partenaire de paiement. Boomly ne voit jamais vos coordonnées bancaires.",
+    "paymentsReady": "Paiements activés",
+    "paymentsReadyText": "Vos gains sont versés automatiquement sur votre compte bancaire après chaque retrait de bagages.",
+    "paymentsDashboard": "Voir mes virements"
   },
   "LocationForm": {
     "titleNew": "Inscrire mon commerce",
@@ -212,7 +235,10 @@
     "example": "Exemple pour 1 bagage pendant 1 jour",
     "exampleLine": "{size} : le voyageur paie {total}, le commerçant reçoit {partner}, Boomly garde {boomly} (avant frais Stripe).",
     "save": "Enregistrer",
-    "saved": "Réglages enregistrés."
+    "saved": "Réglages enregistrés.",
+    "stripeReady": "Paiements activés",
+    "stripePending": "Compte Stripe en cours",
+    "stripeMissing": "Pas encore de compte Stripe"
   },
   "Common": {
     "loading": "Chargement…"
@@ -272,7 +298,37 @@
     "days": "{count, plural, one {# jour} other {# jours}}",
     "total": "Total",
     "pay": "Payer {total}",
-    "paySoon": "Le paiement en ligne arrive très bientôt.",
-    "backToLocation": "Retour à la consigne"
+    "backToLocation": "Retour à la consigne",
+    "payInfo": "Paiement sécurisé par Stripe : carte, Apple Pay ou Google Pay.",
+    "redirecting": "Ouverture du paiement…",
+    "confirming": "Paiement reçu, confirmation en cours…",
+    "confirmed": "Réservation confirmée",
+    "qrAlt": "Code QR de la réservation",
+    "showQr": "Présentez ce code QR au commerçant au dépôt et au retrait. Il vous a aussi été envoyé par e-mail.",
+    "cancelled": "Cette réservation a été annulée.",
+    "refunded": "Cette réservation a été remboursée."
+  },
+  "Emails": {
+    "confirmSubject": "Réservation confirmée {reference} · {name}",
+    "confirmTitle": "Votre réservation est confirmée",
+    "hello": "Bonjour {name},",
+    "confirmIntro": "Merci pour votre réservation ! Voici votre code QR à présenter au commerçant.",
+    "showQr": "Présentez ce code au dépôt et au retrait de vos bagages.",
+    "where": "Où",
+    "directions": "Itinéraire",
+    "dropoff": "Dépôt",
+    "pickup": "Retrait",
+    "bags": "Bagages",
+    "paid": "Payé",
+    "manage": "Voir ma réservation",
+    "cancelInfo": "Annulation gratuite jusqu’à l’heure de dépôt prévue, depuis le lien ci-dessus.",
+    "partnerSubject": "Nouvelle réservation {reference}",
+    "partnerTitle": "Nouvelle réservation",
+    "partnerIntro": "Un voyageur a réservé chez {name}.",
+    "reference": "Référence",
+    "customer": "Voyageur",
+    "bagCount": "Nombre de bagages",
+    "earnings": "Vos gains",
+    "openDashboard": "Ouvrir mon espace"
   }
 }

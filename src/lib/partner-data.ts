@@ -4,7 +4,7 @@ import { shortTime } from "./hours";
 import type { Location, OpeningSlot } from "./types";
 
 const LOCATION_COLUMNS =
-  "id, partner_id, name, business_type, description, address, postal_code, city, latitude, longitude, phone, siret, photos, capacity_per_day, status, status_reason, validated_at, created_at, updated_at";
+  "id, partner_id, name, business_type, description, address, postal_code, city, latitude, longitude, phone, siret, photos, capacity_per_day, status, status_reason, validated_at, created_at, updated_at, stripe_account_id, stripe_details_submitted, stripe_payouts_enabled";
 
 /** Commerce du commerçant connecté (protégé par la RLS : il ne peut lire que le sien). */
 export async function getMyLocation(userId: string): Promise<{ location: Location | null; hours: OpeningSlot[] }> {

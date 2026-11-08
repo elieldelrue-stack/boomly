@@ -16,7 +16,12 @@ export default async function LoginPage({ searchParams }: PageProps<"/[locale]/p
             <LoginWithError searchParams={searchParams} />
           </Suspense>
         </Card>
-        <p className="mt-6 text-center text-sm text-muted">
+        <p className="mt-4 text-center text-sm">
+          <Link href="/partenaire/mot-de-passe-oublie" className="text-muted underline">
+            {t("forgotLink")}
+          </Link>
+        </p>
+        <p className="mt-4 text-center text-sm text-muted">
           {t("noAccount")}{" "}
           <Link href="/partenaire/inscription" className="font-semibold text-brand-700 hover:underline">
             {t("goSignup")}

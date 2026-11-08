@@ -83,3 +83,34 @@ export async function signOutAction(formData: FormData): Promise<void> {
   await supabase.auth.signOut();
   redirect({ href: "/", locale });
 }
+
+const emailOnly = z.object({ email: z.string().trim().toLowerCase().pipe(z.email("email")) });
+
+/** Envoie le lien de réinitialisation. Répond toujours pareil (ne révèle pas si le compte existe). */
+export async function forgotPasswordAction(_prev: FormState, formData: FormData): Promise<FormState> {
+  const locale = safeLocale(formData.get("locale"));
+  const parsed = emailOnly.safeParse(Object.fromEntries(formData));
+  if (!parsed.success) return { fieldErrors: fieldErrors(parsed.error) };
+  const supabase = await createClient();
+  const { error } = await supabase.auth.resetPasswordForEmail(parsed.data.email, {
+    redirectTo: `${siteUrl()}/auth/callback?next=/${locale}/partenaire/nouveau-mot-de-passe`,
+  });
+  if (error?.code === "over_email_send_rate_limit" || error?.code === "over_request_rate_limit") return { error: "rateLimited" };
+  if (error) console.error("Mot de passe oublié :", error.message);
+  return { ok: true };
+}
+
+const newPassword = z.object({ password: z.string().min(8, "passwordShort").max(72, "tooLong") });
+
+export async function updatePasswordAction(_prev: FormState, formData: FormData): Promise<FormState> {
+  const locale = safeLocale(formData.get("locale"));
+  const parsed = newPassword.safeParse(Object.fromEntries(formData));
+  if (!parsed.success) return { fieldErrors: fieldErrors(parsed.error) };
+  const supabase = await createClient();
+  const { data } = await supabase.auth.getUser();
+  if (!data.user) return { error: "notAuthenticated" };
+  const { error } = await supabase.auth.updateUser({ password: parsed.data.password });
+  if (error) return { error: mapAuthError(error.code, error.message) };
+  redirect({ href: "/partenaire?saved=1", locale });
+  return {};
+}

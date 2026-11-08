@@ -31,6 +31,9 @@ export type Location = {
   validated_at: string | null;
   created_at: string;
   updated_at: string;
+  stripe_account_id: string | null;
+  stripe_details_submitted: boolean;
+  stripe_payouts_enabled: boolean;
 };
 
 export type OpeningSlot = {

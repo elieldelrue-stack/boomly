@@ -106,6 +106,14 @@ async function Detail({ params }: { params: Promise<{ id: string }> }) {
               <div>
                 <dt className="text-sm text-muted">{t("capacity")}</dt>
                 <dd>{location.capacity_per_day}</dd>
+                <dt className="mt-3 text-sm text-muted">Stripe</dt>
+                <dd className={location.stripe_payouts_enabled ? "text-green-700" : "text-amber-700"}>
+                  {location.stripe_payouts_enabled
+                    ? t("stripeReady")
+                    : location.stripe_account_id
+                      ? t("stripePending")
+                      : t("stripeMissing")}
+                </dd>
                 <dt className="mt-3 text-sm text-muted">{t("colDate")}</dt>
                 <dd>{format.dateTime(new Date(location.created_at), { dateStyle: "medium", timeStyle: "short" })}</dd>
               </div>

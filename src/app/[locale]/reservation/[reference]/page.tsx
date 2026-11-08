@@ -7,6 +7,9 @@ import { getBookingForTraveler } from "@/lib/booking-access";
 import { formatEuros } from "@/lib/pricing";
 import { TZ } from "@/lib/paris-time";
 import { Alert, Card, PageShell } from "@/components/ui/form";
+import { PayButton } from "@/components/travel/PayButton";
+import { PaymentPoller } from "@/components/travel/PaymentPoller";
+import { qrSvg } from "@/lib/qr";
 
 export const metadata = { robots: { index: false } };
 
@@ -30,8 +33,9 @@ async function Reservation({
 }) {
   await connection();
   const { reference } = await params;
-  const { t: token } = await searchParams;
-  const booking = await getBookingForTraveler(reference, typeof token === "string" ? token : "");
+  const { t: tokenParam, paid } = await searchParams;
+  const token = typeof tokenParam === "string" ? tokenParam : "";
+  const booking = await getBookingForTraveler(reference, token);
   if (!booking) notFound();
 
   const [t, ts, format, locale] = await Promise.all([
@@ -51,6 +55,9 @@ async function Reservation({
     ] as const
   ).filter(([, n]) => n > 0);
   const loc = booking.location;
+  const confirmed = ["paid", "dropped_off", "picked_up"].includes(booking.status);
+  const waitingForStripe = booking.status === "pending_payment" && paid === "1";
+  const qr = confirmed ? await qrSvg(booking.reference) : null;
 
   return (
     <div className="flex flex-col gap-6">
@@ -59,7 +66,28 @@ async function Reservation({
         <p className="font-mono text-2xl font-bold tracking-wider">{booking.reference}</p>
       </div>
 
-      {booking.status === "pending_payment" &&
+      {waitingForStripe && (
+        <>
+          <PaymentPoller />
+          <Alert kind="info">{t("confirming")}</Alert>
+        </>
+      )}
+      {confirmed && (
+        <Card className="border-green-200 bg-green-50 text-center">
+          <p className="text-lg font-bold text-green-800">✓ {t("confirmed")}</p>
+          <div
+            className="mx-auto mt-4 w-52 rounded-xl bg-white p-2 [&_svg]:h-auto [&_svg]:w-full"
+            aria-label={t("qrAlt")}
+            role="img"
+            dangerouslySetInnerHTML={{ __html: qr! }}
+          />
+          <p className="mt-3 text-sm text-green-900">{t("showQr")}</p>
+        </Card>
+      )}
+      {booking.status === "expired" && <Alert>{t("expired")}</Alert>}
+      {booking.status === "cancelled" && <Alert>{t("cancelled")}</Alert>}
+      {booking.status === "refunded" && <Alert>{t("refunded")}</Alert>}
+      {booking.status === "pending_payment" && !waitingForStripe &&
         (expired ? (
           <Alert>{t("expired")}</Alert>
         ) : (
@@ -101,17 +129,8 @@ async function Reservation({
         </div>
       </Card>
 
-      {booking.status === "pending_payment" && !expired && (
-        <div>
-          <button
-            type="button"
-            disabled
-            className="h-12 w-full rounded-xl bg-brand-600 px-5 font-semibold text-white opacity-60"
-          >
-            {t("pay", { total: formatEuros(booking.total_cents, locale) })}
-          </button>
-          <p className="mt-2 text-center text-sm text-muted">{t("paySoon")}</p>
-        </div>
+      {booking.status === "pending_payment" && !expired && !waitingForStripe && (
+        <PayButton reference={booking.reference} token={token} total={formatEuros(booking.total_cents, locale)} />
       )}
 
       <Link href={`/consignes/${loc.id}`} className="text-sm text-muted hover:underline">

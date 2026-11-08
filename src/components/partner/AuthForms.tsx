@@ -1,7 +1,7 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
-import { signInAction, signUpAction } from "@/lib/actions/auth";
+import { forgotPasswordAction, signInAction, signUpAction, updatePasswordAction } from "@/lib/actions/auth";
 import { useFormAction } from "@/components/ui/useFormAction";
 import { Alert, Button, Field, Input } from "@/components/ui/form";
 import type { FormState } from "@/lib/types";
@@ -65,6 +65,47 @@ export function SignupForm() {
       </Field>
       <Button type="submit" disabled={pending}>
         {pending ? "…" : t("signup")}
+      </Button>
+    </form>
+  );
+}
+
+export function ForgotPasswordForm() {
+  const t = useTranslations("Auth");
+  const te = useTranslations("Errors");
+  const locale = useLocale();
+  const [state, action, pending] = useFormAction<FormState>(forgotPasswordAction, {});
+  const fe = state.fieldErrors ?? {};
+  if (state.ok) return <Alert kind="success">{t("forgotSent")}</Alert>;
+  return (
+    <form onSubmit={action} className="flex flex-col gap-4" noValidate>
+      <input type="hidden" name="locale" value={locale} />
+      {state.error && <Alert>{te(state.error)}</Alert>}
+      <Field label={t("email")} htmlFor="email" error={fe.email && te(fe.email)}>
+        <Input id="email" name="email" type="email" autoComplete="email" required aria-invalid={!!fe.email} />
+      </Field>
+      <Button type="submit" disabled={pending}>
+        {pending ? "…" : t("forgotSubmit")}
+      </Button>
+    </form>
+  );
+}
+
+export function NewPasswordForm() {
+  const t = useTranslations("Auth");
+  const te = useTranslations("Errors");
+  const locale = useLocale();
+  const [state, action, pending] = useFormAction<FormState>(updatePasswordAction, {});
+  const fe = state.fieldErrors ?? {};
+  return (
+    <form onSubmit={action} className="flex flex-col gap-4" noValidate>
+      <input type="hidden" name="locale" value={locale} />
+      {state.error && <Alert>{te(state.error)}</Alert>}
+      <Field label={t("newPassword")} htmlFor="password" hint={t("passwordHint")} error={fe.password && te(fe.password)}>
+        <Input id="password" name="password" type="password" autoComplete="new-password" minLength={8} required aria-invalid={!!fe.password} />
+      </Field>
+      <Button type="submit" disabled={pending}>
+        {pending ? "…" : t("newPasswordSubmit")}
       </Button>
     </form>
   );

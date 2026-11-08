@@ -21,6 +21,7 @@ export type TravelerBooking = {
   total_cents: number;
   status: string;
   expires_at: string | null;
+  stripe_checkout_session_id: string | null;
   location: Pick<PublicLocation, "id" | "name" | "address" | "postal_code" | "city" | "latitude" | "longitude">;
 };
 
@@ -38,7 +39,7 @@ export async function getBookingForTraveler(reference: string, token: string): P
   const { data } = await supabase
     .from("bookings")
     .select(
-      "id, reference, access_token, customer_name, customer_email, bags_small, bags_medium, bags_large, bag_count, dropoff_at, pickup_at, days, price_small_cents, price_medium_cents, price_large_cents, total_cents, status, expires_at, location:locations(id, name, address, postal_code, city, latitude, longitude)",
+      "id, reference, access_token, customer_name, customer_email, bags_small, bags_medium, bags_large, bag_count, dropoff_at, pickup_at, days, price_small_cents, price_medium_cents, price_large_cents, total_cents, status, expires_at, stripe_checkout_session_id, location:locations(id, name, address, postal_code, city, latitude, longitude)",
     )
     .eq("reference", reference)
     .maybeSingle();

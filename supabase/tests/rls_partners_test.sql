@@ -76,3 +76,10 @@ do $$ begin
 exception when insufficient_privilege then null; end $$;
 reset role;
 select pg_temp.check(true, 'photos limitées à son dossier');
+
+-- Étape 4 : le commerçant ne peut pas se déclarer « paiements activés »
+-- (à lancer après la migration 20261108020000_payments.sql)
+select pg_temp.as_user('00000000-0000-0000-0000-00000000000a');
+update public.locations set stripe_payouts_enabled = true, stripe_account_id = 'acct_pirate';
+reset role;
+select pg_temp.check((select not stripe_payouts_enabled and stripe_account_id is null from public.locations where partner_id = '00000000-0000-0000-0000-00000000000a'), 'champs Stripe non modifiables par le commerçant');

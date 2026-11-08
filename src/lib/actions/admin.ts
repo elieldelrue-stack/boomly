@@ -6,6 +6,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getCurrentProfile } from "@/lib/auth";
 import { SETTINGS_TAG } from "@/lib/settings";
 import { LOCATIONS_TAG } from "@/lib/public-locations";
+import { syncStripeStatus } from "@/lib/stripe-connect";
 import type { FormState } from "@/lib/types";
 
 async function assertAdmin(): Promise<FormState | null> {
@@ -34,6 +35,25 @@ export async function setLocationStatusAction(_prev: FormState, formData: FormDa
   const { id, status, reason } = parsed.data;
 
   const supabase = await createClient();
+
+  // Un commerce n'est mis en ligne que si Stripe peut lui verser son argent.
+  if (status === "active") {
+    const { data: loc } = await supabase
+      .from("locations")
+      .select("stripe_account_id, stripe_payouts_enabled")
+      .eq("id", id)
+      .single();
+    let ready = !!loc?.stripe_payouts_enabled;
+    if (!ready && loc?.stripe_account_id) {
+      try {
+        ready = (await syncStripeStatus(id, loc.stripe_account_id)).payoutsEnabled;
+      } catch (e) {
+        console.error("Vérification Stripe :", (e as Error).message);
+      }
+    }
+    if (!ready) return { error: "stripeNotReady" };
+  }
+
   const { error } = await supabase
     .from("locations")
     .update({ status, status_reason: status === "active" ? null : reason })

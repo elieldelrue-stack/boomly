@@ -98,6 +98,12 @@
       "full": "{remaining, plural, =0 {Fully booked on these dates.} one {Fully booked: only # spot left on these dates.} other {Fully booked: only # spots left on these dates.}}",
       "invalid": "Please check the dates and times.",
       "generic": "Something went wrong. Please try again."
+    },
+    "stripeNotReady": "The partner must first finish setting up Stripe payouts.",
+    "checkout": {
+      "notPending": "This booking is no longer awaiting payment.",
+      "expired": "The payment window has passed. Please book again.",
+      "stripe": "The payment service is not responding. Please try again."
     }
   },
   "Auth": {
@@ -119,7 +125,15 @@
     "checkEmailTitle": "Check your inbox",
     "checkEmailText": "We sent you a confirmation link. Click it to continue registering your business.",
     "logout": "Log out",
-    "callbackError": "This link is invalid or has expired. Log in or sign up again."
+    "callbackError": "This link is invalid or has expired. Log in or sign up again.",
+    "forgotLink": "Forgot your password?",
+    "forgotTitle": "Forgot password",
+    "forgotText": "Enter your email and we'll send you a link to choose a new password.",
+    "forgotSubmit": "Send link",
+    "forgotSent": "If an account exists with this email, a link has just been sent. Check your spam folder too.",
+    "newPasswordTitle": "New password",
+    "newPassword": "New password",
+    "newPasswordSubmit": "Save"
   },
   "Partner": {
     "title": "My partner area",
@@ -137,7 +151,16 @@
     "capacity": "Up to {count} bags per day",
     "saved": "Changes saved.",
     "adminLink": "Admin area",
-    "comingSoon": "Coming soon here: today's bookings, QR code scanner, earnings and Stripe payouts."
+    "comingSoon": "Coming soon here: today's bookings, QR code scanner, earnings and Stripe payouts.",
+    "paymentsTitle": "Payouts",
+    "paymentsTodo": "To receive your earnings, create your secure Stripe payout account: identity and IBAN. Required before going live.",
+    "paymentsPending": "Stripe is checking your details. It usually takes a few minutes, longer if documents are missing.",
+    "paymentsStart": "Set up payouts",
+    "paymentsContinue": "Complete my Stripe details",
+    "paymentsHint": "You'll be redirected to Stripe, our payment partner. Boomly never sees your bank details.",
+    "paymentsReady": "Payouts enabled",
+    "paymentsReadyText": "Your earnings are paid automatically to your bank account after each bag pick-up.",
+    "paymentsDashboard": "View my payouts"
   },
   "LocationForm": {
     "titleNew": "Register my business",
@@ -212,7 +235,10 @@
     "example": "Example for 1 bag for 1 day",
     "exampleLine": "{size}: traveller pays {total}, partner receives {partner}, Boomly keeps {boomly} (before Stripe fees).",
     "save": "Save",
-    "saved": "Settings saved."
+    "saved": "Settings saved.",
+    "stripeReady": "Payouts enabled",
+    "stripePending": "Stripe account in progress",
+    "stripeMissing": "No Stripe account yet"
   },
   "Common": {
     "loading": "Loading…"
@@ -272,7 +298,37 @@
     "days": "{count, plural, one {# day} other {# days}}",
     "total": "Total",
     "pay": "Pay {total}",
-    "paySoon": "Online payment is coming very soon.",
-    "backToLocation": "Back to storage point"
+    "backToLocation": "Back to storage point",
+    "payInfo": "Secure payment by Stripe: card, Apple Pay or Google Pay.",
+    "redirecting": "Opening payment…",
+    "confirming": "Payment received, confirming…",
+    "confirmed": "Booking confirmed",
+    "qrAlt": "Booking QR code",
+    "showQr": "Show this QR code to the shopkeeper at drop-off and pick-up. It was also sent to you by email.",
+    "cancelled": "This booking was cancelled.",
+    "refunded": "This booking was refunded."
+  },
+  "Emails": {
+    "confirmSubject": "Booking confirmed {reference} · {name}",
+    "confirmTitle": "Your booking is confirmed",
+    "hello": "Hello {name},",
+    "confirmIntro": "Thank you for your booking! Here is your QR code to show the shopkeeper.",
+    "showQr": "Show this code when dropping off and picking up your bags.",
+    "where": "Where",
+    "directions": "Directions",
+    "dropoff": "Drop-off",
+    "pickup": "Pick-up",
+    "bags": "Bags",
+    "paid": "Paid",
+    "manage": "View my booking",
+    "cancelInfo": "Free cancellation until your drop-off time, from the link above.",
+    "partnerSubject": "New booking {reference}",
+    "partnerTitle": "New booking",
+    "partnerIntro": "A traveller booked at {name}.",
+    "reference": "Reference",
+    "customer": "Traveller",
+    "bagCount": "Number of bags",
+    "earnings": "Your earnings",
+    "openDashboard": "Open my area"
   }
 }
