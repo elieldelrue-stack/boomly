@@ -6,6 +6,7 @@ import { locale as rootLocale } from "next/root-params";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { routing } from "@/i18n/routing";
+import { siteUrl } from "@/lib/site-url";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import "../globals.css";
@@ -21,7 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: t("title"),
     description: t("description"),
-    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
+    metadataBase: new URL(siteUrl()),
   };
 }
 
