@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState, useTransition } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { createBookingAction, quoteAction, type Quote } from "@/lib/actions/booking";
 import { useFormAction } from "@/components/ui/useFormAction";
+import { Link } from "@/i18n/navigation";
 import { Alert, Button, Field, Input, inputClass } from "@/components/ui/form";
 import { addDays, isoWeekday, parisNow, timeOptions } from "@/lib/paris-time";
 import { BAG_SIZES, formatEuros, type BagSize } from "@/lib/pricing";
@@ -282,7 +283,20 @@ export function BookingForm({
       <div>
         <label className="flex items-start gap-3 text-sm">
           <input type="checkbox" name="terms" className="mt-0.5 h-5 w-5 shrink-0 accent-brand-600" aria-invalid={!!fe.terms} />
-          <span>{t("terms")}</span>
+          <span>
+            {t.rich("terms", {
+              cgu: (chunks) => (
+                <Link href="/infos/cgu" target="_blank" className="font-semibold underline">
+                  {chunks}
+                </Link>
+              ),
+              items: (chunks) => (
+                <Link href="/infos/cgu#objets-interdits" target="_blank" className="font-semibold underline">
+                  {chunks}
+                </Link>
+              ),
+            })}
+          </span>
         </label>
         <p className="mt-2 text-xs text-muted">{t("forbidden")}</p>
         {fe.terms && <p className="mt-1 text-sm text-red-600">{te("terms")}</p>}

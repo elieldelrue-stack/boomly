@@ -8,6 +8,7 @@ import { stripe } from "@/lib/stripe";
 import { siteUrl } from "@/lib/site-url";
 import { safeLocale } from "@/lib/locale";
 import type { FormState } from "@/lib/types";
+import { allowRequest } from "@/lib/rate-limit";
 
 const schema = z.object({
   reference: z.string().regex(/^BMY-[A-Z0-9]{6}$/),
@@ -20,6 +21,7 @@ export async function startCheckoutAction(_prev: FormState, formData: FormData):
   const parsed = schema.safeParse(Object.fromEntries(formData));
   if (!parsed.success) return { error: "generic" };
   const { reference, token } = parsed.data;
+  if (!(await allowRequest("checkout"))) return { error: "rateLimited" };
 
   const booking = await getBookingForTraveler(reference, token);
   if (!booking) return { error: "generic" };

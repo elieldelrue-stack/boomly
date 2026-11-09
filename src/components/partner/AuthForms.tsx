@@ -3,6 +3,7 @@
 import { useLocale, useTranslations } from "next-intl";
 import { forgotPasswordAction, signInAction, signUpAction, updatePasswordAction } from "@/lib/actions/auth";
 import { useFormAction } from "@/components/ui/useFormAction";
+import { Link } from "@/i18n/navigation";
 import { Alert, Button, Field, Input } from "@/components/ui/form";
 import type { FormState } from "@/lib/types";
 
@@ -63,6 +64,26 @@ export function SignupForm() {
       <Field label={t("password")} htmlFor="password" hint={t("passwordHint")} error={fe.password && te(fe.password)}>
         <Input id="password" name="password" type="password" autoComplete="new-password" minLength={8} required aria-invalid={!!fe.password} />
       </Field>
+      <div>
+        <label className="flex items-start gap-3 text-sm">
+          <input type="checkbox" name="terms" className="mt-0.5 h-5 w-5 shrink-0 accent-brand-600" aria-invalid={!!fe.terms} />
+          <span>
+            {t.rich("partnerTerms", {
+              terms: (chunks) => (
+                <Link href="/infos/conditions-partenaires" target="_blank" className="font-semibold underline">
+                  {chunks}
+                </Link>
+              ),
+              privacy: (chunks) => (
+                <Link href="/infos/confidentialite" target="_blank" className="font-semibold underline">
+                  {chunks}
+                </Link>
+              ),
+            })}
+          </span>
+        </label>
+        {fe.terms && <p className="mt-1 text-sm text-red-600">{te("terms")}</p>}
+      </div>
       <Button type="submit" disabled={pending}>
         {pending ? "…" : t("signup")}
       </Button>

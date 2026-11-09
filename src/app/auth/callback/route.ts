@@ -7,7 +7,8 @@ export async function GET(request: NextRequest) {
   const code = searchParams.get("code");
   const nextParam = searchParams.get("next") ?? "/fr/partenaire";
   // Uniquement des redirections internes au site.
-  const next = nextParam.startsWith("/") && !nextParam.startsWith("//") ? nextParam : "/fr/partenaire";
+  // Uniquement un chemin interne : "/fr/..." (refuse "//site", "/\\site" et les caractères de contrôle).
+  const next = /^\/(fr|en)(\/[A-Za-z0-9\-_/]*)?$/.test(nextParam) ? nextParam : "/fr/partenaire";
 
   if (code) {
     const supabase = await createClient();

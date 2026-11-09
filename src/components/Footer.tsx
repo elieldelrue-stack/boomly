@@ -65,7 +65,18 @@ export async function Footer() {
       </div>
       <div className="border-t border-white/10">
         <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-5 text-sm text-white/60 sm:flex-row sm:items-center sm:justify-between">
-          <p>© 2026 Boomly. {t("rights")}</p>
+          <div className="flex flex-col gap-2">
+            <p>© 2026 Boomly. {t("rights")}</p>
+            <ul className="flex flex-wrap gap-x-4 gap-y-1">
+              {(["mentions-legales", "cgu", "conditions-partenaires", "confidentialite", "cookies", "support"] as const).map((s) => (
+                <li key={s}>
+                  <Link href={`/infos/${s}`} className="hover:text-white">
+                    {t(`legal_${s}`)}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
           <div className="flex items-center gap-1">
             <IconGlobe className="mr-1 h-4 w-4" />
             {(["fr", "en"] as const).map((l) => (

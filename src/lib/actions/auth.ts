@@ -6,12 +6,14 @@ import { createClient } from "@/lib/supabase/server";
 import { safeLocale } from "@/lib/locale";
 import { siteUrl } from "@/lib/site-url";
 import type { FormState } from "@/lib/types";
+import { allowRequest } from "@/lib/rate-limit";
 
 const signupSchema = z.object({
   fullName: z.string().trim().min(2, "required").max(120, "tooLong"),
   email: z.string().trim().toLowerCase().pipe(z.email("email")),
   phone: z.string().trim().min(6, "required").max(30, "tooLong"),
   password: z.string().min(8, "passwordShort").max(72, "tooLong"),
+  terms: z.literal("on", "terms"),
 });
 
 const loginSchema = z.object({
@@ -43,6 +45,7 @@ export async function signUpAction(_prev: FormState, formData: FormData): Promis
   if (!parsed.success) return { fieldErrors: fieldErrors(parsed.error) };
 
   const { fullName, email, phone, password } = parsed.data;
+  if (!(await allowRequest("signup"))) return { error: "rateLimited" };
   const supabase = await createClient();
   const { data, error } = await supabase.auth.signUp({
     email,
@@ -69,6 +72,7 @@ export async function signInAction(_prev: FormState, formData: FormData): Promis
   const parsed = loginSchema.safeParse(Object.fromEntries(formData));
   if (!parsed.success) return { fieldErrors: fieldErrors(parsed.error) };
 
+  if (!(await allowRequest("login"))) return { error: "rateLimited" };
   const supabase = await createClient();
   const { error } = await supabase.auth.signInWithPassword(parsed.data);
   if (error) return { error: mapAuthError(error.code, error.message) };
@@ -91,6 +95,7 @@ export async function forgotPasswordAction(_prev: FormState, formData: FormData)
   const locale = safeLocale(formData.get("locale"));
   const parsed = emailOnly.safeParse(Object.fromEntries(formData));
   if (!parsed.success) return { fieldErrors: fieldErrors(parsed.error) };
+  if (!(await allowRequest("forgot"))) return { error: "rateLimited" };
   const supabase = await createClient();
   const { error } = await supabase.auth.resetPasswordForEmail(parsed.data.email, {
     redirectTo: `${siteUrl()}/auth/callback?next=/${locale}/partenaire/nouveau-mot-de-passe`,

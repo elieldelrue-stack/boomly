@@ -59,6 +59,9 @@ async function Dashboard({ searchParams }: { searchParams: Promise<Record<string
               {t("adminLink")}
             </Link>
           )}
+          <Link href="/partenaire/compte" className="text-muted underline">
+            {t("account")}
+          </Link>
           <form action={signOutAction}>
             <input type="hidden" name="locale" value={locale} />
             <button type="submit" className="text-muted underline">

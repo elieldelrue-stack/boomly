@@ -34,10 +34,12 @@ psql -d base_de_test -f supabase/migrations/20261108010000_bookings.sql
 psql -d base_de_test -f supabase/migrations/20261108020000_payments.sql
 psql -d base_de_test -f supabase/migrations/20261108030000_handover.sql
 psql -d base_de_test -f supabase/migrations/20261108040000_admin.sql
+psql -d base_de_test -f supabase/migrations/20261109000000_compliance.sql
 psql -d base_de_test -f supabase/tests/rls_partners_test.sql   # sur une base neuve
 psql -d base_de_test -f supabase/tests/bookings_test.sql       # sur une autre base neuve
 psql -d base_de_test -f supabase/tests/handover_test.sql       # sur une autre base neuve
 psql -d base_de_test -f supabase/tests/admin_test.sql          # sur une autre base neuve
+psql -d base_de_test -f supabase/tests/compliance_test.sql     # sur une autre base neuve
 ```
 
 ## Devenir admin
@@ -54,3 +56,9 @@ update public.profiles set role = 'admin' where email = 'votre@email.fr';
 - Accès aux données protégé par la Row Level Security de Supabase.
 - Aucune clé secrète dans le code : uniquement des variables d'environnement.
 - Stripe en mode test jusqu'à nouvel ordre.
+
+## Informations légales
+
+Les textes légaux sont dans `src/content/legal-fr.tsx` et `legal-en.tsx`. Les informations de la société
+(nom, SIRET, plafond d'indemnisation, médiateur…) se complètent dans `src/lib/legal-config.ts`.
+**Brouillons à faire relire par un avocat avant le lancement.**

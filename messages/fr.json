@@ -38,7 +38,13 @@
     "become": "Devenir partenaire",
     "partnerLogin": "Espace partenaire",
     "contact": "Nous contacter",
-    "cities": "Rechercher à"
+    "cities": "Rechercher à",
+    "legal_mentions-legales": "Mentions légales",
+    "legal_cgu": "CGU",
+    "legal_conditions-partenaires": "Conditions partenaires",
+    "legal_confidentialite": "Confidentialité",
+    "legal_cookies": "Cookies",
+    "legal_support": "Aide"
   },
   "NotFound": {
     "title": "Page introuvable",
@@ -109,7 +115,8 @@
       "closure": "Le commerce est exceptionnellement fermé à ces dates.",
       "full": "{remaining, plural, =0 {Complet à ces dates.} one {Complet : il ne reste qu’# place à ces dates.} other {Complet : il ne reste que # places à ces dates.}}",
       "invalid": "Vérifiez les dates et les heures.",
-      "generic": "Une erreur est survenue. Réessayez dans un instant."
+      "generic": "Une erreur est survenue. Réessayez dans un instant.",
+      "rateLimited": "Trop de demandes en peu de temps. Patientez quelques minutes."
     },
     "stripeNotReady": "Le commerçant doit d’abord terminer la configuration de ses paiements Stripe.",
     "checkout": {
@@ -139,7 +146,12 @@
       "stripe": "Stripe a refusé le remboursement. Voir les logs.",
       "reversal": "Voyageur remboursé, mais la reprise sur le commerçant a échoué (solde insuffisant ?). À régler à la main dans Stripe."
     },
-    "rating": "Choisissez une note de 1 à 5 étoiles."
+    "rating": "Choisissez une note de 1 à 5 étoiles.",
+    "confirmWord": "Tapez le mot demandé pour confirmer.",
+    "account": {
+      "openBookings": "Vous avez encore des réservations à déposer ou en garde. Terminez-les avant de supprimer votre compte.",
+      "adminCannotDelete": "Un compte administrateur ne peut pas être supprimé ici."
+    }
   },
   "Auth": {
     "loginTitle": "Connexion partenaire",
@@ -168,7 +180,8 @@
     "forgotSent": "Si un compte existe avec cet e-mail, un lien vient de vous être envoyé. Pensez à vérifier vos courriers indésirables.",
     "newPasswordTitle": "Nouveau mot de passe",
     "newPassword": "Nouveau mot de passe",
-    "newPasswordSubmit": "Enregistrer"
+    "newPasswordSubmit": "Enregistrer",
+    "partnerTerms": "J’accepte les <terms>conditions partenaires</terms> et j’ai lu la <privacy>politique de confidentialité</privacy>."
   },
   "Partner": {
     "title": "Mon espace partenaire",
@@ -216,7 +229,8 @@
     "from": "Du",
     "to": "Au",
     "closureReason": "Motif (facultatif)",
-    "closureAdd": "Ajouter la fermeture"
+    "closureAdd": "Ajouter la fermeture",
+    "account": "Mon compte"
   },
   "LocationForm": {
     "titleNew": "Inscrire mon commerce",
@@ -340,7 +354,7 @@
     "email": "E-mail",
     "emailHint": "Votre confirmation et votre code QR seront envoyés à cette adresse.",
     "phone": "Téléphone (facultatif)",
-    "terms": "J'accepte les conditions d'utilisation et je confirme que mes bagages ne contiennent aucun objet interdit.",
+    "terms": "J’accepte les <cgu>conditions générales</cgu> et je confirme que mes bagages ne contiennent aucun <items>objet interdit</items>.",
     "forbidden": "Objets interdits : argent liquide, objets de valeur, produits dangereux, denrées périssables, animaux.",
     "continue": "Continuer · {total}",
     "continueNoPrice": "Continuer",
@@ -650,5 +664,27 @@
     "faqA7": "Non. Une adresse e-mail suffit : vous y recevez votre confirmation, votre code QR et le lien pour gérer votre réservation.",
     "faqQ8": "Je tiens un commerce, comment devenir partenaire ?",
     "faqA8": "Inscrivez votre commerce en quelques minutes, configurez vos paiements avec Stripe, puis notre équipe valide votre fiche. Vous êtes payé automatiquement après chaque retrait."
+  },
+  "Legal": {
+    "nav": "Informations légales",
+    "updated": "Dernière mise à jour : {date}"
+  },
+  "Account": {
+    "title": "Mon compte",
+    "name": "Nom",
+    "email": "E-mail",
+    "changePassword": "Changer mon mot de passe",
+    "exportTitle": "Mes données",
+    "exportText": "Téléchargez un fichier contenant les informations de votre compte, de votre commerce et l’historique de vos réservations (sans les données personnelles des voyageurs).",
+    "exportButton": "Télécharger mes données",
+    "deleteTitle": "Supprimer mon compte",
+    "deleteText": "Votre commerce est retiré de la carte, vos données personnelles sont effacées et vous ne pourrez plus vous connecter. Les informations de facturation sont conservées le temps exigé par la loi.",
+    "deleteOpen": "Supprimer mon compte",
+    "deleteWarning": "Cette action est définitive. Vos réservations en cours doivent d’abord être terminées.",
+    "deleteConfirmLabel": "Pour confirmer, tapez SUPPRIMER",
+    "deleteWord": "SUPPRIMER",
+    "deleteConfirm": "Supprimer définitivement",
+    "cancel": "Annuler",
+    "adminNote": "Un compte administrateur ne peut pas être supprimé ici."
   }
 }

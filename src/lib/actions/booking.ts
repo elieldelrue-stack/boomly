@@ -5,6 +5,7 @@ import { redirect } from "@/i18n/navigation";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { safeLocale } from "@/lib/locale";
 import type { FormState } from "@/lib/types";
+import { allowRequest } from "@/lib/rate-limit";
 
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
 const TIME = /^([01]\d|2[0-3]):[0-5]\d$/;
@@ -36,6 +37,7 @@ export type Quote =
   | { ok: false; error: string; remaining?: number };
 
 const KNOWN_ERRORS = new Set([
+  "rateLimited",
   "unavailable", "bags", "past", "order", "tooLong", "dropoffClosed", "pickupClosed", "closure", "full",
 ]);
 
@@ -44,6 +46,7 @@ export async function quoteAction(input: QuoteInput): Promise<Quote> {
   const parsed = quoteSchema.safeParse(input);
   if (!parsed.success) return { ok: false, error: "invalid" };
   const q = parsed.data;
+  if (!(await allowRequest("quote"))) return { ok: false, error: "rateLimited" };
 
   const supabase = createAdminClient();
   const { data, error } = await supabase.rpc("booking_quote", {
@@ -92,6 +95,7 @@ export async function createBookingAction(_prev: FormState, formData: FormData):
     return { fieldErrors };
   }
   const b = parsed.data;
+  if (!(await allowRequest("booking"))) return { error: "rateLimited" };
 
   const supabase = createAdminClient();
   const { data, error } = await supabase

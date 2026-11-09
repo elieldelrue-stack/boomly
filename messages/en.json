@@ -38,7 +38,13 @@
     "become": "Become a partner",
     "partnerLogin": "Partner area",
     "contact": "Contact us",
-    "cities": "Search in"
+    "cities": "Search in",
+    "legal_mentions-legales": "Legal notice",
+    "legal_cgu": "Terms",
+    "legal_conditions-partenaires": "Partner terms",
+    "legal_confidentialite": "Privacy",
+    "legal_cookies": "Cookies",
+    "legal_support": "Help"
   },
   "NotFound": {
     "title": "Page not found",
@@ -109,7 +115,8 @@
       "closure": "The shop is exceptionally closed on these dates.",
       "full": "{remaining, plural, =0 {Fully booked on these dates.} one {Fully booked: only # spot left on these dates.} other {Fully booked: only # spots left on these dates.}}",
       "invalid": "Please check the dates and times.",
-      "generic": "Something went wrong. Please try again."
+      "generic": "Something went wrong. Please try again.",
+      "rateLimited": "Too many requests in a short time. Please wait a few minutes."
     },
     "stripeNotReady": "The partner must first finish setting up Stripe payouts.",
     "checkout": {
@@ -139,7 +146,12 @@
       "stripe": "Stripe refused the refund. See logs.",
       "reversal": "Traveller refunded, but taking back the partner’s share failed (insufficient balance?). Handle it manually in Stripe."
     },
-    "rating": "Pick a rating from 1 to 5 stars."
+    "rating": "Pick a rating from 1 to 5 stars.",
+    "confirmWord": "Type the requested word to confirm.",
+    "account": {
+      "openBookings": "You still have bookings to drop off or in storage. Complete them before deleting your account.",
+      "adminCannotDelete": "An admin account can’t be deleted here."
+    }
   },
   "Auth": {
     "loginTitle": "Partner login",
@@ -168,7 +180,8 @@
     "forgotSent": "If an account exists with this email, a link has just been sent. Check your spam folder too.",
     "newPasswordTitle": "New password",
     "newPassword": "New password",
-    "newPasswordSubmit": "Save"
+    "newPasswordSubmit": "Save",
+    "partnerTerms": "I accept the <terms>partner terms</terms> and have read the <privacy>privacy policy</privacy>."
   },
   "Partner": {
     "title": "My partner area",
@@ -216,7 +229,8 @@
     "from": "From",
     "to": "To",
     "closureReason": "Reason (optional)",
-    "closureAdd": "Add closure"
+    "closureAdd": "Add closure",
+    "account": "My account"
   },
   "LocationForm": {
     "titleNew": "Register my business",
@@ -340,7 +354,7 @@
     "email": "Email",
     "emailHint": "Your confirmation and QR code will be sent to this address.",
     "phone": "Phone (optional)",
-    "terms": "I accept the terms of use and confirm my bags contain no prohibited items.",
+    "terms": "I accept the <cgu>terms and conditions</cgu> and confirm my bags contain no <items>prohibited items</items>.",
     "forbidden": "Prohibited items: cash, valuables, hazardous goods, perishable food, animals.",
     "continue": "Continue · {total}",
     "continueNoPrice": "Continue",
@@ -650,5 +664,27 @@
     "faqA7": "No. An email address is enough: you’ll receive your confirmation, QR code and the link to manage your booking.",
     "faqQ8": "I run a shop, how do I become a partner?",
     "faqA8": "Register your shop in a few minutes, set up payouts with Stripe, then our team approves your listing. You’re paid automatically after each pick-up."
+  },
+  "Legal": {
+    "nav": "Legal information",
+    "updated": "Last updated: {date}"
+  },
+  "Account": {
+    "title": "My account",
+    "name": "Name",
+    "email": "Email",
+    "changePassword": "Change my password",
+    "exportTitle": "My data",
+    "exportText": "Download a file with your account, business information and booking history (without travellers’ personal data).",
+    "exportButton": "Download my data",
+    "deleteTitle": "Delete my account",
+    "deleteText": "Your shop is removed from the map, your personal data is erased and you won’t be able to log in. Invoicing information is kept for the period required by law.",
+    "deleteOpen": "Delete my account",
+    "deleteWarning": "This is permanent. Your ongoing bookings must be completed first.",
+    "deleteConfirmLabel": "To confirm, type DELETE",
+    "deleteWord": "DELETE",
+    "deleteConfirm": "Delete permanently",
+    "cancel": "Cancel",
+    "adminNote": "An admin account can’t be deleted here."
   }
 }

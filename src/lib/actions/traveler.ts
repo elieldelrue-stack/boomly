@@ -8,6 +8,7 @@ import { refundBooking } from "@/lib/refunds";
 import { sendAdminAlert, sendCancellationEmail } from "@/lib/email";
 import { LOCATIONS_TAG } from "@/lib/public-locations";
 import type { FormState } from "@/lib/types";
+import { allowRequest } from "@/lib/rate-limit";
 
 const access = z.object({
   reference: z.string().regex(/^BMY-[A-Z0-9]{6}$/),
@@ -88,6 +89,7 @@ export async function incidentAction(_prev: FormState, formData: FormData): Prom
   if (!["paid", "dropped_off", "picked_up"].includes(booking.status)) return { error: "manage.noIncident" };
   const parsed = incident.safeParse(Object.fromEntries(formData));
   if (!parsed.success) return { fieldErrors: { description: parsed.error.issues[0]?.message ?? "required" } };
+  if (!(await allowRequest("incident"))) return { error: "rateLimited" };
 
   const admin = createAdminClient();
   const files = formData.getAll("photos").filter((f): f is File => f instanceof File && f.size > 0).slice(0, 3);
@@ -147,6 +149,7 @@ export async function reviewAction(_prev: FormState, formData: FormData): Promis
   if (booking.status !== "picked_up") return { error: "manage.noReview" };
   const parsed = review.safeParse(Object.fromEntries(formData));
   if (!parsed.success) return { fieldErrors: { rating: parsed.error.issues[0]?.message ?? "rating" } };
+  if (!(await allowRequest("review"))) return { error: "rateLimited" };
 
   const { error } = await createAdminClient()
     .from("reviews")
