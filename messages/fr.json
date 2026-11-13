@@ -8,7 +8,14 @@
     "language": "English",
     "how": "Comment ça marche",
     "prices": "Tarifs",
-    "shops": "Commerçants"
+    "shops": "Commerçants",
+    "menu": "Menu",
+    "menuBook": "Réserver une consigne",
+    "menuBookText": "Trouver un commerçant près de vous",
+    "menuLogin": "Me connecter",
+    "menuJoin": "Devenir partenaire",
+    "menuHelp": "Aide & FAQ",
+    "menuHelpText": "Vos questions, nos réponses"
   },
   "Home": {
     "badge": "Consigne à bagages chez les commerçants",
@@ -686,5 +693,16 @@
     "deleteConfirm": "Supprimer définitivement",
     "cancel": "Annuler",
     "adminNote": "Un compte administrateur ne peut pas être supprimé ici."
+  },
+  "PartnerSpace": {
+    "metaTitle": "Espace partenaire",
+    "title": "Espace partenaire",
+    "subtitle": "Vous accueillez déjà des bagages avec Boomly, ou vous voulez vous lancer ? C'est par ici.",
+    "loginTitle": "Déjà partenaire ?",
+    "loginText": "Retrouvez vos réservations du jour, scannez les dépôts et suivez vos revenus.",
+    "loginCta": "Me connecter",
+    "joinTitle": "Pas encore partenaire ?",
+    "joinText": "Inscrivez votre commerce en quelques minutes, sans abonnement ni engagement.",
+    "joinCta": "Devenir partenaire"
   }
 }

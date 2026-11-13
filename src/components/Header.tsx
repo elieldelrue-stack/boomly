@@ -1,6 +1,7 @@
 import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Logo } from "./Logo";
+import { HeaderMenu } from "./HeaderMenu";
 
 export async function Header() {
   const t = await getTranslations("Header");
@@ -23,9 +24,7 @@ export async function Header() {
           <Link href="/" locale={other} className="grid h-10 min-w-10 place-items-center rounded-full px-2 uppercase hover:bg-cream-200" aria-label={t("language")}>
             {other}
           </Link>
-          <Link href="/partenaire" className="inline-flex h-10 items-center rounded-full bg-ink px-4 text-white transition hover:-translate-y-0.5">
-            {t("partner")}
-          </Link>
+          <HeaderMenu />
         </div>
       </div>
     </header>

@@ -8,7 +8,14 @@
     "language": "Français",
     "how": "How it works",
     "prices": "Pricing",
-    "shops": "For shops"
+    "shops": "For shops",
+    "menu": "Menu",
+    "menuBook": "Book a locker spot",
+    "menuBookText": "Find a shop near you",
+    "menuLogin": "Log in",
+    "menuJoin": "Become a partner",
+    "menuHelp": "Help & FAQ",
+    "menuHelpText": "Your questions, answered"
   },
   "Home": {
     "badge": "Luggage storage at local shops",
@@ -686,5 +693,16 @@
     "deleteConfirm": "Delete permanently",
     "cancel": "Cancel",
     "adminNote": "An admin account can’t be deleted here."
+  },
+  "PartnerSpace": {
+    "metaTitle": "Partner area",
+    "title": "Partner area",
+    "subtitle": "Already storing bags with Boomly, or ready to get started? This way.",
+    "loginTitle": "Already a partner?",
+    "loginText": "See today's bookings, scan drop-offs and track your earnings.",
+    "loginCta": "Log in",
+    "joinTitle": "Not a partner yet?",
+    "joinText": "List your shop in a few minutes, with no subscription or commitment.",
+    "joinCta": "Become a partner"
   }
 }
